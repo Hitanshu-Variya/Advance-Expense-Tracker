@@ -1,7 +1,9 @@
 import { UserStructure } from "../Interfaces/Interfaces";
 import nodemailer from 'nodemailer';
+import { PasswordResetSuccessTemplate } from "./EmailTemplates";
+import path from "path";
 
-const SendResetSuccessfulMail = async (email: UserStructure["email"]) => {
+const SendResetSuccessfulMail = async (username: UserStructure["username"], email: UserStructure["email"]) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
@@ -13,10 +15,22 @@ const SendResetSuccessfulMail = async (email: UserStructure["email"]) => {
             }
         });
 
+        const LogoPath = path.join(__dirname, '../Utilities/Images/Logo.png');
+        const PasswordResetSuccessTemplatePath = path.join(__dirname, '../Utilities/Images/PasswordResetSuccessTemplate.png');
+
         const mailDetails = {
             to: email,
             subject: 'Password Reset status',
-            html: `<p> Your Password Reset Successfully! </p>`
+            html: PasswordResetSuccessTemplate.replace("{Username}", username ?? "Error getting Username!"),
+            attachments: [{
+                filename: 'Logo.png',
+                path: LogoPath,
+                cid: '../Utilities/Images/Logo.png' 
+            }, {
+                filename: 'PasswordResetSuccessTemplate.png',
+                path: PasswordResetSuccessTemplatePath,
+                cid: '../Utilities/Images/PasswordResetSuccessTemplate.png' 
+            }]
         };
 
         await transporter.sendMail(mailDetails);

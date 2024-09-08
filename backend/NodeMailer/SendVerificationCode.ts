@@ -1,7 +1,9 @@
 import { UserStructure } from "../Interfaces/Interfaces";
+import { VerificationCodeTemplate } from "./EmailTemplates";
 import nodemailer from 'nodemailer';
+import path from 'path';
 
-const SendVerificationCode = async (email: UserStructure["email"], verificationCode: UserStructure["verificationCode"]) => {
+const SendVerificationCode = async (username: UserStructure["username"], email: UserStructure["email"], verificationCode: UserStructure["verificationCode"]) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
@@ -13,10 +15,22 @@ const SendVerificationCode = async (email: UserStructure["email"], verificationC
             }
         });
 
+        const LogoPath = path.join(__dirname, '../Utilities/Images/Logo.png');
+        const VerificationCodeTemplatePath = path.join(__dirname, '../Utilities/Images/VerificationCodeTemplate.png');
+        
         const mailDetails = {
             to: email,
             subject: 'Your Verification Code',
-            html: `<p>Your verification code is <strong>${verificationCode}</strong></p>`
+            html: VerificationCodeTemplate.replace("{Verification Code}", verificationCode ?? "Internal Error!").replace("{Username}", username ?? "Error getting Username!"),
+            attachments: [{
+                filename: 'Logo.png',
+                path: LogoPath,
+                cid: '../Utilities/Images/Logo.png' 
+            }, {
+                filename: 'VerificationCodeTemplate.png',
+                path: VerificationCodeTemplatePath,
+                cid: '../Utilities/Images/VerificationCodeTemplate.png' 
+            }]
         };
 
         await transporter.sendMail(mailDetails);

@@ -31,11 +31,11 @@ const signup = async (req:Request, res:Response) => {
             password: hashedPassword,
             email,
             verificationCode,
-            verificationCodeExpiresAt: Date.now() + 24 * 60 * 60 * 1000
+            verificationCodeExpiresAt: Date.now() +  15 * 60 * 1000
         });
         await newUser.save();
         GenerateJWTTokenAndCookie(newUser._id, res);
-        await SendVerificationCode(newUser.email, verificationCode);
+        await SendVerificationCode(newUser.username, newUser.email, verificationCode);
 
         return res.status(201).send({
             ID: newUser._id,
@@ -95,7 +95,7 @@ const forgetPassword = async (req:Request, res:Response) => {
         User.resetPasswordExpiresAt = resetTokenExpiresAt;
 
         await User.save();
-        await SendPasswordResetEmail(User.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+        await SendPasswordResetEmail(User.username, User.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
         return res.status(201).json({success: true, message: "password reset link send successfully!"});
 
     } catch (error) {
@@ -126,7 +126,7 @@ const resetPassword = async (req:Request, res:Response) => {
         User.resetPasswordExpiresAt = undefined;
         await User.save();
 
-        await SendResetSuccessfulMail(User.email);
+        await SendResetSuccessfulMail(User.username, User.email);
         return res.status(201).json({success: true, message: "password reset successfully!"});
 
     } catch (error) {

@@ -1,7 +1,9 @@
 import { UserStructure } from '../Interfaces/Interfaces';
 import nodemailer from 'nodemailer';
+import { ResetPasswordEmailTemplate } from './EmailTemplates';
+import path from 'path';
 
-const SendPasswordResetEmail = async (email: UserStructure["email"], clientURL: string) => {
+const SendPasswordResetEmail = async (username: UserStructure["username"], email: UserStructure["email"], clientURL: string) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
@@ -13,10 +15,22 @@ const SendPasswordResetEmail = async (email: UserStructure["email"], clientURL: 
             }
         });
 
+        const LogoPath = path.join(__dirname, '../Utilities/Images/Logo.png');
+        const ResetPasswordEmailTemplatePath = path.join(__dirname, '../Utilities/Images/ResetPasswordTemplate.png');
+
         const mailDetails = {
             to: email,
             subject: 'Password Reset Link',
-            html: `<p>Your Password Reset Link is : <a href=${clientURL}> click me! </a></p>`
+            html: ResetPasswordEmailTemplate.replace("{Username}", username ?? "Error getting Username!").replace("{ResetLink}", clientURL),
+            attachments: [{
+                filename: 'Logo.png',
+                path: LogoPath,
+                cid: '../Utilities/Images/Logo.png' 
+            }, {
+                filename: 'ResetPasswordTemplate.png',
+                path: ResetPasswordEmailTemplatePath,
+                cid: '../Utilities/Images/ResetPasswordTemplate.png' 
+            }]
         };
 
         await transporter.sendMail(mailDetails);
