@@ -1,7 +1,14 @@
+import { Route, Routes } from "react-router-dom";
+import SignUpPage from "../Pages/SignUpPage.tsx";
+import LoginPage from "../Pages/LoginPage.tsx";
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div>
+      <Routes>
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </div>
   )
 }
