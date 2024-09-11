@@ -49,8 +49,8 @@ const LoginPage = () => {
             <div className="flex items-center justify-between">
               <div className="text-sm">
                 <a
-                  href="#"
-                  className="font-medium text-blue-500 hover:text-blue-400"
+                  onClick={() => {navigate('/forget-password')}}
+                  className="font-medium text-blue-500 hover:text-blue-400 cursor-pointer"
                 >
                   Forgot Password?
                 </a>

@@ -22,7 +22,7 @@ const SignUpPage = () => {
         <div className="w-1/2 p-10 flex flex-col justify-center">
           <h2 className="text-4xl text-white font-bold mb-6">Create an account</h2>
           <p className="text-sm text-gray-400 mb-6">
-            Already have an account? <a onClick={() => {navigate('/login')}} className="text-blue-400 hover:underline cursor-pointer">Log in</a>
+            Already have an account? <a onClick={() => {navigate('/login')}} className="font-medium text-blue-500 hover:text-blue-400 cursor-pointer">Log in</a>
           </p>
 
           <div className="space-y-4">
