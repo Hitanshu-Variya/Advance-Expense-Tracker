@@ -1,5 +1,9 @@
-interface PasswordStrengthCheckerProps {
+export type PasswordStrengthCheckerProps = {
     password: string;
 }
 
-export default PasswordStrengthCheckerProps;
+export type FeatureCardProps = {
+    imagePath: string;
+    cardTitle: string;
+    cardDescription: string;
+}
