@@ -2,7 +2,10 @@ import FeatureCard from '../HomePage/HomePage.FeatureSection.Card.tsx'
 
 const FeaturesSection = () => {
   return (
-    <section className="bg-black text-white py-12">
+    <section className="bg-black text-white py-12 mt-10 relative">
+      <div className="absolute left-[-120px] top-[20%] w-[150px] h-[150px] bg-cyan-400 rounded-full blur-2xl opacity-70"></div>
+      <div className="absolute right-[-120px] bottom-[-20%] w-[200px] h-[200px] bg-cyan-400 rounded-full blur-2xl opacity-70"></div>
+
       <hr className='my-10 h-px w-full bg-slate-800 border-none shadow-lg shadow-white' />
       <div className="container mx-auto text-center">
         <div className='flex flex-col items-center'>

@@ -13,9 +13,9 @@ const signup = async (req:Request, res:Response) => {
     try {
         const { username, password, confirmPassword, email } = req.body;
 
-        const UserNamealreadyExists = await user.findOne({username});
-        if(UserNamealreadyExists) {
-            return res.status(400).json({error : "Username already Exists! Please choose a different Username!"});
+        const EmailalreadyExists = await user.findOne({email});
+        if(EmailalreadyExists) {
+            return res.status(400).json({error : "Email already Exists! Please choose a different Email!"});
         }
 
         if(password !== confirmPassword) {
@@ -25,7 +25,7 @@ const signup = async (req:Request, res:Response) => {
         const salt = await bcrypt.genSalt(10);  
         const hashedPassword = await bcrypt.hash(password, salt);
         const verificationCode = GenerateVerificationCode();
-
+        
         const newUser = new user({
             username,
             password: hashedPassword,
@@ -35,13 +35,13 @@ const signup = async (req:Request, res:Response) => {
         });
         await newUser.save();
         GenerateJWTTokenAndCookie(newUser._id, res);
-        await SendVerificationCode(newUser.username, newUser.email, verificationCode);
 
-        return res.status(201).send({
+        res.status(201).json({ 
             ID: newUser._id,
             username: newUser.username,
-            email: newUser.email
+            email: newUser.email 
         });
+        await SendVerificationCode(newUser.username, newUser.email, verificationCode);
 
     } catch (error) {
         console.log("Error: signup", error);
@@ -95,8 +95,8 @@ const forgetPassword = async (req:Request, res:Response) => {
         User.resetPasswordExpiresAt = resetTokenExpiresAt;
 
         await User.save();
+        res.status(201).json({success: true, message: "password reset link send successfully!"});
         await SendPasswordResetEmail(User.username, User.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
-        return res.status(201).json({success: true, message: "password reset link send successfully!"});
 
     } catch (error) {
         console.log("Error: forget-password", error);
@@ -137,8 +137,8 @@ const resetPassword = async (req:Request, res:Response) => {
 
 const login = async (req:Request, res:Response) => {
     try {
-        const { username, password } = req.body;
-        const User = await user.findOne({username});
+        const { email, password } = req.body;
+        const User = await user.findOne({email});
         const CheckPassword = await bcrypt.compare(password, User?.password ?? "");
 
         if(!User || !CheckPassword) {
@@ -149,7 +149,6 @@ const login = async (req:Request, res:Response) => {
         GenerateJWTTokenAndCookie(User._id, res)
         return res.status(201).send({
             ID: User._id,
-            username: User.username,
             email: User.email
         });
 

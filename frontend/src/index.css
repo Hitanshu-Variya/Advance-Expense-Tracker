@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input:-webkit-autofill {
+    background-color: #1f2937 !important; 
+    color: #ffffff !important;           
+    -webkit-box-shadow: 0 0 0 30px #1f2937 inset !important; 
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+
+input:-moz-autofill {
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+}

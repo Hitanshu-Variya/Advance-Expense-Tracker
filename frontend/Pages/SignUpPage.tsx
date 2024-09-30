@@ -1,11 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import PasswordStrengthChecker from '../Components/PasswordStrengthChecker.tsx';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const SignUpPage = () => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userDetails, setUserDetails] = useState({username: "", email: "", password: "", confirmPassword: ""});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const {username, email, password, confirmPassword} = userDetails;
+
+    if(!username || !email || !password || !confirmPassword) {
+      const error = "All fields are necessary!";
+      toast.error(error);
+      return;
+    }
+
+    if(userDetails.password != userDetails.confirmPassword) {
+      const error = "Password and confirmPassword fields are not matching";
+      toast.error(error);
+      return;
+    }
+
+    setLoading(true);  
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/signup`, userDetails);
+      if(response.status === 201) {
+        navigate('/verify-email');
+      }
+
+    } catch (error_: any) {
+      console.error('Error logging in:', error_.response?.data || error_.message);
+      const error = error_.response?.data?.error || "An error occurred. Please try again.";
+      toast.error(error);
+    } finally {
+      setLoading(false); 
+    }
+  }
 
   return (
     <div className="bg-gray-700 h-screen flex items-center justify-center">
@@ -25,40 +59,47 @@ const SignUpPage = () => {
             Already have an account? <a onClick={() => {navigate('/login')}} className="font-medium text-blue-500 hover:text-blue-400 cursor-pointer">Log in</a>
           </p>
 
-          <div className="space-y-4">
-            <div className="flex space-x-4">
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <div className="flex space-x-4">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+                  value={userDetails.username}
+                  onChange={(e) => setUserDetails({...userDetails, username: e.target.value})}
+                />
+              </div>
               <input
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="Email"
+                className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+                value={userDetails.email}
+                onChange={(e) => setUserDetails({...userDetails, email: e.target.value})}
+              />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={userDetails.password}
+                onChange={(e) => setUserDetails({...userDetails, password: e.target.value})}
                 className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               />
+
+              <input
+                type="password"
+                placeholder="Confirm password"
+                value={userDetails.confirmPassword}
+                onChange={(e) => setUserDetails({...userDetails, confirmPassword: e.target.value})}
+                className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+              />
+
+              <PasswordStrengthChecker password={userDetails.password} />
+
+              <button type='submit' className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition shadow-md">
+                {loading ? 'Loading...' : 'Create account'}
+              </button>
             </div>
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-            <input
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-
-            <input
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-            />
-
-            <PasswordStrengthChecker password={password} />
-            <button className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition shadow-md">
-              Create account
-            </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

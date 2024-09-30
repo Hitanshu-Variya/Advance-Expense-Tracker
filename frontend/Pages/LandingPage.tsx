@@ -4,7 +4,7 @@ import FeatureSection from '../Components/HomePage/HomePage.FeatureSection.tsx'
 
 const LandingPage = () => {
   return (
-    <div className="mx-auto px-4 md:px-14 pb-6 bg-black">
+    <div className="mx-auto px-4 md:px-14 pb-6 bg-black overflow-hidden">
       <Navbar />
       <HeroSection />
       <FeatureSection />

@@ -89,12 +89,12 @@ const WelcomeEmailTemplate = `<!DOCTYPE html>
             <p>Welcome to Expense Flow! We're excited to have you on board.</p>
             <p>With Expense Flow, managing your finances has never been easier. Track your spending, set budgets, and achieve your financial goals—all in one place.</p>
             <p>Here's what you can do:</p>
-            <ul style="text-align: left; margin: 20px auto; list-style-type: disc; color: aliceblue; padding-left: 40px;">
-                <li>Track expenses and categorize them effortlessly</li>
-                <li>Create budgets and stay on top of your finances</li>
-                <li>Generate reports to better understand your spending habits</li>
-                <li>Get insights and tips to improve your financial well-being</li>
-            </ul>
+            <div style="text-align: center; margin: 20px; color: aliceblue;">
+                <p>Track expenses and categorize them effortlessly</p>
+                <p>Create budgets and stay on top of your finances</p>
+                <p>Generate reports to better understand your spending habits</p>
+                <p>Get insights and tips to improve your financial well-being</p>
+            </div>
             <p style="margin-top: 20px;">Start exploring by logging into your account and setting up your first budget.</p>
             <p style="margin-top: 20px;">If you need any assistance, feel free to reach out to our support team.</p>
             <p style="margin-top: 20px;">Best regards,<br>Expense Flow Team</p>

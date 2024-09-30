@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,10 +28,10 @@ const Navbar = () => {
       </nav>
 
       <div className="flex items-center space-x-3 md:space-x-4">
-        <button className="bg-transparent text-white px-3 md:px-4 py-2 rounded-full hover:bg-gray-700">
+        <button onClick={() => navigate('/login')} className="bg-transparent text-white px-3 md:px-4 py-2 rounded-full hover:bg-gray-700">
           Login
         </button>
-        <button className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-3 md:px-4 py-2 rounded-full hover:opacity-90">
+        <button onClick={() => navigate('/signup')} className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-3 md:px-4 py-2 rounded-full hover:opacity-90">
           Sign up
         </button>
 
