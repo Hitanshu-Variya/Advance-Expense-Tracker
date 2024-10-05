@@ -7,3 +7,8 @@ export type FeatureCardProps = {
     cardTitle: string;
     cardDescription: string;
 }
+
+export type HeaderProps = {
+    name: string; 
+    page: string;
+}
