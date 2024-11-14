@@ -15,7 +15,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-24 md:w-52 lg:w-56 xl:w-64 bg-gradient-to-b from-[#2A0A4B] to-[#46287c] text-gray-300 shadow-lg fixed top-2 left-1 h-[97.8vh] z-50 rounded-2xl">
+    <aside className="w-24 md:w-52 lg:w-56 xl:w-64 bg-gradient-to-b from-[#2A0A4B] to-[#46287c] text-gray-300 shadow-lg h-[100vh] rounded-l-2xl">
       <div className="p-6 px-4">
         <div className='flex flex-col justify-center items-center mb-6'>
           <img className='w-14 xl:w-16 md:mr-2' src="../Utilities/Images/Logo.png" alt="ExpenFlow logo"/>
@@ -26,7 +26,7 @@ const Sidebar = () => {
           <ul className="space-y-3">
             {[
               { name: "Home", icon: <FaHome />, path: "/dashboard" },
-              { name: "Expenses", icon: <FaWallet />, path: "/expenses" },
+              { name: "Transactions", icon: <FaWallet />, path: "/transactions" },
               { name: "Budget", icon: <FaFileInvoiceDollar />, path: "/budget" },
               { name: "Report", icon: <FaChartPie />, path: "/report" },
               { name: "Settings", icon: <FaCog />, path: "/settings" },

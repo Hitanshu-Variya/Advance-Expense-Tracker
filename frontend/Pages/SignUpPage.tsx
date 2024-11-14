@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import PasswordStrengthChecker from '../Components/PasswordStrengthChecker.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,9 @@ const SignUpPage = () => {
 
     setLoading(true);  
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/signup`, userDetails);
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/signup`, userDetails, {
+        withCredentials: true
+      });
       if(response.status === 201) {
         navigate('/verify-email');
       }

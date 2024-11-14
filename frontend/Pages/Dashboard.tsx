@@ -1,29 +1,57 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Sidebar from '../Components/Dashboard/Dashboard.sideBar.tsx';
 import Header from '../Components/Dashboard/Dashboard.Header.tsx';
+import TotalIncomeCard from '../Components/Dashboard/Dashboard.IncomeCard.tsx';
+import TransactionHistory from '../Components/Dashboard/Dashboard.transactionHistory.tsx';
 
 const Dashboard = () => {
+  const [totalTransaction, setTotalTransaction] = useState({ income: 0, expense: 0 });
+  const [incomeDataSet, setIncomeDataSet] = useState<number[]>([]);
+  const [expenseDataSet, setExpenseDataSet] = useState<number[]>([]);
+
+  const fetchTotalIncome = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/data/transactions/total-income`, {
+        withCredentials: true,
+      });
+      setTotalTransaction(prev => ({ ...prev, income: response.data.totalIncome }));
+      setIncomeDataSet(response.data.transactions);
+    } catch (error) {
+      console.error("Error fetching total income:", error);
+    }
+  };
+
+  const fetchTotalExpense = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/data/transactions/total-expense`, {
+        withCredentials: true,
+      });
+      setTotalTransaction(prev => ({ ...prev, expense: response.data.totalExpense }));
+      setExpenseDataSet(response.data.transactions);
+    } catch (error) {
+      console.error("Error fetching total expense:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTotalIncome();
+    fetchTotalExpense();
+  }, []);
+
   return (
     <div className="min-h-screen bg-black text-gray-200">
-      <Header name="Hitanshu" page="Dashboard"/>
-      <Sidebar />
-
-      <main className="flex-1 p-6 ml-24 md:ml-52 lg:ml-56 xl:ml-64">
-        <h2 className="text-2xl font-bold mb-4">Dashboard Overview</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-gray-800 p-4 rounded-lg shadow-xl">
-            <h3 className="text-lg font-bold">Total Income</h3>
-            <p className="mt-2 text-2xl">$5000</p>
+      <div className='flex'>
+        <Sidebar />
+        <div className='flex flex-col flex-1'>
+          <Header name="Hitanshu" page="Dashboard" />
+          <div className="flex justify-start">
+            <TotalIncomeCard Name="Total Income" dataSet={incomeDataSet} totalTransaction={totalTransaction.income} />
+            <TotalIncomeCard Name="Total Expense" dataSet={expenseDataSet} totalTransaction={totalTransaction.expense} />
           </div>
-          <div className="bg-gray-800 p-4 rounded-lg shadow-xl">
-            <h3 className="text-lg font-bold">Total Expenses</h3>
-            <p className="mt-2 text-2xl">$3000</p>
-          </div>
-          <div className="bg-gray-800 p-4 rounded-lg shadow-xl">
-            <h3 className="text-lg font-bold">Remaining Balance</h3>
-            <p className="mt-2 text-2xl">$2000</p>
-          </div>
+          <TransactionHistory />
         </div>
-      </main>
+      </div> 
     </div>
   );
 };

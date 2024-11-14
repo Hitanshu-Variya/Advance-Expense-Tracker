@@ -1,4 +1,5 @@
-import { Types } from 'mongoose';
+import { Request } from 'express';
+import { ObjectId, Types } from 'mongoose';
 
 interface UserStructure {
     _id?: Types.ObjectId,
@@ -13,4 +14,24 @@ interface UserStructure {
     verificationCodeExpiresAt: Date | undefined,
 };
 
-export { UserStructure };
+interface TransactionStructure {
+    _id?: Types.ObjectId,
+    createdBy: ObjectId,
+    transactionName: string,
+    amount: number,
+    category: string,
+    description: string | null,
+    paymentMethod: string,
+    date: Date,
+    transactionType: string
+};
+
+declare global {
+    namespace Express {
+        export interface Request {
+            userID?: string;
+        }
+    }
+}
+
+export { UserStructure, TransactionStructure };
