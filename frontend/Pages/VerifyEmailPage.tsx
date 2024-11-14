@@ -53,7 +53,9 @@ const VerifyEmailPage = () => {
 
     setLoading(true);  
     try {
-        const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/verify-email`, {ReceivedCode});
+        const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/verify-email`, {ReceivedCode}, {
+          withCredentials: true
+        });
         if(response.status === 201) {
           toast.success("Email verified successfully");
           setTimeout(() => {navigate('/login')}, 1000);

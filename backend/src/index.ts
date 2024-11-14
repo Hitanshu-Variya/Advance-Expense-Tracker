@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from "../Routes/auth.routes.ts";
+import transactionRoutes from "../Routes/transaction.routes.ts";
 import ConnectToDB from "../Database/ConnectToDB.ts"
 import cookieParser from 'cookie-parser';
 
@@ -15,7 +16,15 @@ app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials: true
 }));
+app.use((_, res, next) => {
+    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 app.use("/api/auth", authRoutes);
+app.use("/", transactionRoutes);
 
 app.listen(PORT, () => {
     ConnectToDB();

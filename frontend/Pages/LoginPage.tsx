@@ -13,7 +13,9 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/login`, loginDetails);
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/login`, loginDetails, {
+        withCredentials: true
+      });
       if(response.status === 201) {
         navigate('/dashboard');
       }

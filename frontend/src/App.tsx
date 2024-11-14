@@ -6,6 +6,7 @@ import LoginPage from "../Pages/LoginPage.tsx";
 import ForgetPasswordPage from "../Pages/ForgetPasswordPage.tsx"
 import ResetPasswordPage from "../Pages/ResetPasswordPage.tsx"
 import Dashboard from '../Pages/Dashboard.tsx'
+import Expense from '../Pages/Transaction.tsx';
 import { Toaster } from "react-hot-toast";
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/forget-password" element={<ForgetPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/transactions" element={<Expense />} />
       </Routes>
       <Toaster />
     </div>
