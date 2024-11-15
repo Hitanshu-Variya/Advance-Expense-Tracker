@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from "../Routes/auth.routes.ts";
 import transactionRoutes from "../Routes/transaction.routes.ts";
+import budgetRoutes from "../Routes/budget.routes.ts";
 import ConnectToDB from "../Database/ConnectToDB.ts"
 import cookieParser from 'cookie-parser';
 
@@ -25,6 +26,7 @@ app.use((_, res, next) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/", transactionRoutes);
+app.use('/budget', budgetRoutes);
 
 app.listen(PORT, () => {
     ConnectToDB();

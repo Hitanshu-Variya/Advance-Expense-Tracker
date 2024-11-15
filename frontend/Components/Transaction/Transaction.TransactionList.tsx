@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import TransactionCard from '../Transaction/Transaction.TransactionCard.tsx';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import TransactionCard from "../Transaction/Transaction.TransactionCard.tsx";
 
 interface Transaction {
   _id: string;
@@ -10,21 +10,26 @@ interface Transaction {
   paymentMethod: string;
   description?: string;
   date: string;
-  transactionType: string; 
+  transactionType: string;
 }
 
-interface FilterSectionProps {
-  onNewTransaction: () => void; 
+interface TransactionListProps {
+  onNewTransaction: () => void;
+  searchParams: { attribute: string; value: string };
 }
 
-const TransactionList: React.FC<FilterSectionProps> = ({ onNewTransaction }) => {
+const TransactionList: React.FC<TransactionListProps> = ({
+  onNewTransaction,
+  searchParams,
+}) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const fetchTransactions = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/data/get-all-transactions`, {
-        withCredentials: true
-      });
+          withCredentials: true,
+        }
+      );
       setTransactions(response.data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -33,13 +38,30 @@ const TransactionList: React.FC<FilterSectionProps> = ({ onNewTransaction }) => 
 
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [onNewTransaction]);
+
+  const filteredTransactions = transactions.filter((transaction) =>
+    searchParams.attribute
+      ? transaction[searchParams.attribute as keyof Transaction]
+          ?.toString()
+          .toLowerCase()
+          .includes(searchParams.value.toLowerCase())
+      : true
+  );
 
   return (
     <div className="grid gap-4">
-      {transactions.map(transaction => (
-        <TransactionCard key={transaction._id} transaction={transaction} onEdit={onNewTransaction}/>
-      ))}
+      {filteredTransactions.length > 0 ? (
+        filteredTransactions.map((transaction) => (
+          <TransactionCard
+            key={transaction._id}
+            transaction={transaction}
+            onEdit={onNewTransaction}
+          />
+        ))
+      ) : (
+        <p className="text-gray-500">No transactions found.</p>
+      )}
     </div>
   );
 };

@@ -14,7 +14,7 @@ const getAllTransactions = async (req: Request, res: Response) => {
 
 const addTransaction = async (req: Request, res: Response) => {
   try {
-    const { transactionName, amount, category, description, paymentMethod, date } = req.body;
+    const { transactionName, amount, category, description, paymentMethod, date, transactionType } = req.body;
     const newTransaction = new transaction({
       createdBy: req.userID as unknown as Types.ObjectId, 
       transactionName,
@@ -22,7 +22,8 @@ const addTransaction = async (req: Request, res: Response) => {
       category,
       description,
       paymentMethod,
-      date
+      date,
+      transactionType
     });
     await newTransaction.save();
     res.status(201).json(newTransaction);

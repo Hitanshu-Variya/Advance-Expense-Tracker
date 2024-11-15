@@ -1,66 +1,53 @@
 import React, { useState } from "react";
-import { FaSearch, FaPlus } from "react-icons/fa";
-import TransactionModal from "./Transaction.TransactionModal.tsx";
-import axios from "axios";
 
 interface FilterSectionProps {
-  onNewTransaction: () => void; 
+  onSearchChange: (searchParams: { attribute: string; value: string }) => void;
+  onNewTransaction: () => void;
 }
 
-const FilterSection: React.FC<FilterSectionProps> = ({ onNewTransaction }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleNewTransaction = async (transactionData: {
-    transactionName: string;
-    amount: number;
-    category: string;
-    description?: string;
-    paymentMethod: string;
-    date: string;
-  }) => {
-    try {
-      await axios.post(`${import.meta.env.VITE_SERVER_URL}/data/add-transaction`, {...transactionData}, {
-        withCredentials: true
-      });
-      onNewTransaction();  
-      setIsModalOpen(false); 
-    } catch (error) {
-      console.error("Error adding new transaction:", error);
-    }
+const FilterSection: React.FC<FilterSectionProps> = ({
+  onSearchChange,
+  onNewTransaction,
+}) => {
+  const [attribute, setAttribute] = useState("transactionName");
+  const [value, setValue] = useState("");
+
+  const handleSearch = () => {
+    onSearchChange({ attribute, value });
   };
 
   return (
-    <div className="flex items-center gap-4 mb-4">
-      <div className="flex items-center bg-white shadow rounded-md p-2 w-full max-w-md">
-        <FaSearch className="text-gray-400 mr-2" />
-        <input
-          type="text"
-          placeholder="Search transactions"
-          className="w-full outline-none"
-        />
-      </div>
-      <select className="bg-white shadow rounded-md p-2 text-gray-600">
-        <option value="">All Categories</option>
-        <option value="Food">Food</option>
-        <option value="Transport">Transport</option>
-        <option value="Health">Health</option>
-        <option value="Education">Education</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Shopping">Shopping</option>
-        <option value="Utilities">Utilities</option>
-        <option value="Others">Others</option>
+    <div className="flex flex-col md:flex-row gap-4 items-center mb-6">
+      <select
+        className="p-2 border rounded-md"
+        value={attribute}
+        onChange={(e) => setAttribute(e.target.value)}
+      >
+        <option value="transactionName">Transaction Name</option>
+        <option value="category">Category</option>
+        <option value="paymentMethod">Payment Method</option>
+        <option value="transactionType">Transaction Type</option>
+        <option value="date">Date</option>
       </select>
-      <button
-          className="flex items-center gap-2 bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600"
-          onClick={() => setIsModalOpen(true)} 
-        >
-        <FaPlus /> Add Transaction
-      </button>
-
-      <TransactionModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)} 
-        onSubmit={handleNewTransaction} 
+      <input
+        type="text"
+        className="p-2 border rounded-md flex-1"
+        placeholder={`Search by ${attribute}`}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
       />
+      <button
+        className="bg-blue-500 text-white py-2 px-4 rounded-md"
+        onClick={handleSearch}
+      >
+        Search
+      </button>
+      <button
+        className="bg-green-500 text-white py-2 px-4 rounded-md"
+        onClick={onNewTransaction}
+      >
+        New Transaction
+      </button>
     </div>
   );
 };
