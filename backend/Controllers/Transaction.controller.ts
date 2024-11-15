@@ -12,6 +12,25 @@ const getAllTransactions = async (req: Request, res: Response) => {
   }
 };
 
+const getTransactionsByCategory = async (req: Request, res: Response) => {
+  const { category } = req.params;
+
+  try {
+    const transactions = await transaction.find({ category: category });
+
+    const incomeTransactions = transactions.filter(tx => tx.transactionType === 'income');
+    const expenseTransactions = transactions.filter(tx => tx.transactionType === 'expense');
+
+    const totalIncome = incomeTransactions.reduce((acc, tx) => acc + tx.amount, 0);
+    const totalExpense = expenseTransactions.reduce((acc, tx) => acc + tx.amount, 0);
+
+    res.json({ totalIncome, totalExpense });
+  } catch (error) {
+    console.error('Error fetching transactions:', error);
+    res.status(500).json({ error: 'Failed to fetch transactions' });
+  }
+};
+
 const addTransaction = async (req: Request, res: Response) => {
   try {
     const { transactionName, amount, category, description, paymentMethod, date, transactionType } = req.body;
@@ -122,4 +141,4 @@ const totalExpense = async (req: Request, res: Response) => {
   }
 };
 
-export { getAllTransactions, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome };
+export { getAllTransactions, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome };
