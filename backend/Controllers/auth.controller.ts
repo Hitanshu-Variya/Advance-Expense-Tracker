@@ -50,7 +50,7 @@ const signup = async (req: Request, res: Response) => {
         await BudgetModel.create({
           userID: newUser._id,
           category,
-          amount: 0, 
+          amount: 1000, 
           period: 'month', 
         });
       }

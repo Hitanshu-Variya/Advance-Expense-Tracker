@@ -25,7 +25,7 @@ app.use((_, res, next) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/", transactionRoutes);
+app.use("/data", transactionRoutes);
 app.use('/budget', budgetRoutes);
 
 app.listen(PORT, () => {
