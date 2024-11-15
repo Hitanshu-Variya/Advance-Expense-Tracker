@@ -9,6 +9,19 @@ export type FeatureCardProps = {
 }
 
 export type HeaderProps = {
-    name: string; 
+    name: string;
     page: string;
 }
+
+export type Budget = {
+    _id: string | null;
+    category: string;
+    amount: number;
+    period: 'week' | 'month' | 'year';
+}
+
+export type Category = 'Food' | 'Transport' | 'Health' | 'Education' | 'Entertainment' | 'Shopping' | 'Utilities' | 'Others';
+
+export const categories: Category[] = [
+  'Food', 'Transport', 'Health', 'Education', 'Entertainment', 'Shopping', 'Utilities', 'Others'
+];

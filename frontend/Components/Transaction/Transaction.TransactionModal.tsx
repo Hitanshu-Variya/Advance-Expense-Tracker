@@ -14,16 +14,18 @@ interface TransactionModalProps {
   }) => void;
 }
 
+const initialTransactionData = {
+  transactionName: "",
+  amount: 0,
+  category: "Food",
+  description: "",
+  paymentMethod: "cash",
+  date: new Date().toISOString().slice(0, 10),
+  transactionType: "",
+};
+
 const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [transactionData, setTransactionData] = useState({
-    transactionName: "",
-    amount: 0,
-    category: "Food",
-    description: "",
-    paymentMethod: "cash",
-    date: new Date().toISOString().slice(0, 10),
-    transactionType: "income",
-  });
+  const [transactionData, setTransactionData] = useState(initialTransactionData);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setTransactionData({ ...transactionData, [e.target.name]: e.target.value });
@@ -32,6 +34,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(transactionData);
+    setTransactionData(initialTransactionData);
     onClose();
   };
 

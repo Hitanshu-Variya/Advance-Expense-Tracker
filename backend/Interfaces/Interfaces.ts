@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import { ObjectId, Types } from 'mongoose';
 
 interface UserStructure {
@@ -26,6 +25,14 @@ interface TransactionStructure {
     transactionType: string
 };
 
+interface Budget {
+    _id?: Types.ObjectId,
+    userID: ObjectId,
+    category: string;
+    amount: number;
+    period: 'week' | 'month' | 'year';
+}
+
 declare global {
     namespace Express {
         export interface Request {
@@ -34,4 +41,10 @@ declare global {
     }
 }
 
-export { UserStructure, TransactionStructure };
+export type Category = 'Food' | 'Transport' | 'Health' | 'Education' | 'Entertainment' | 'Shopping' | 'Utilities' | 'Others';
+
+export const categories: Category[] = [
+  'Food', 'Transport', 'Health', 'Education', 'Entertainment', 'Shopping', 'Utilities', 'Others'
+];
+
+export { UserStructure, TransactionStructure, Budget };
