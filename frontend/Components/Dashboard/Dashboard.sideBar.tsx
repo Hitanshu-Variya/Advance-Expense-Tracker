@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaHome, FaWallet, FaChartPie, FaFileInvoiceDollar, FaCog, FaUser } from 'react-icons/fa';
+import { TbLogout2 } from "react-icons/tb";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [tooltip, setTooltip] = useState('');
 
-  const handleMouseEnter = (text:string) => {
+  const handleMouseEnter = (text: string) => {
     setTooltip(text);
   };
 
@@ -15,15 +16,16 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-24 md:w-52 lg:w-56 xl:w-64 bg-gradient-to-b from-[#2A0A4B] to-[#46287c] text-gray-300 shadow-lg h-[100vh] rounded-l-2xl">
-      <div className="p-6 px-4">
-        <div className='flex flex-col justify-center items-center mb-6'>
-          <img className='w-14 xl:w-16 md:mr-2' src="../Utilities/Images/Logo.png" alt="ExpenFlow logo"/>
-          <h1 className="hidden md:block md:text-xl xl:text-2xl text-center font-bold text-white">Expense Flow</h1>
+    <aside className="w-20 md:w-24 lg:w-auto bg-gradient-to-b from-[#e0f7fa] to-[#b2ebf2] text-gray-800 shadow-lg h-screen rounded-l-xl">
+      <div className="flex flex-col justify-between h-screen p-4">
+        <div className="flex items-center justify-center mb-2">
+          <img className="w-16 xl:w-16" src="../Utilities/Images/Logo.png" alt="ExpenFlow logo" />
+          <h1 className="text-base md:text-lg xl:text-xl font-semibold text-blue-800">Expense Flow</h1>
         </div>
-        <hr className='mb-4 bg-slate-500 h-[1px] lg:h-[2px] border-none' />
+
+        <hr className="border-t border-blue-200 mx-4 mb-4" />
         <nav>
-          <ul className="space-y-3">
+          <ul className="space-y-2 pl-4">
             {[
               { name: "Home", icon: <FaHome />, path: "/dashboard" },
               { name: "Transactions", icon: <FaWallet />, path: "/transactions" },
@@ -33,18 +35,19 @@ const Sidebar = () => {
               { name: "Profile", icon: <FaUser />, path: "/profile" },
             ].map((item) => (
               <li key={item.name}>
-                <button 
-                  onClick={() => navigate(item.path)} 
+                <button
+                  onClick={() => navigate(item.path)}
                   onMouseEnter={() => handleMouseEnter(item.name)}
                   onMouseLeave={handleMouseLeave}
-                  className="relative w-full flex items-center text-left p-3 rounded-lg transition-all duration-200 hover:bg-[#2a2a65] hover:shadow-[0px_0px_8px_#c78de0]"
+                  className="relative w-full flex items-center justify-start p-3 pl-5 rounded-lg transition-all duration-200 hover:bg-blue-200 hover:text-blue-900"
                 >
-                  <span className="bg-[#5C4A8D] text-white rounded-full p-3 mr-4 text-xl">
+                  <span className="text-2xl text-blue-600 mr-4">
                     {item.icon}
                   </span>
-                  <span className="text-lg hidden md:block">{item.name}</span>
+                  <span className="text-base text-blue-800">{item.name}</span>
+                  {/* Tooltip will be visible only on medium screens and larger */}
                   {tooltip === item.name && (
-                    <div className="block md:hidden absolute left-[70px] top-1/2 transform -translate-y-1/2 bg-slate-700 text-white text-sm rounded-md py-1 px-2 shadow-lg">
+                    <div className="absolute left-[80px] top-1/2 transform -translate-y-1/2 bg-blue-800 text-white text-xs rounded-md py-1 px-2 shadow-md block md:hidden">
                       {item.name}
                     </div>
                   )}
@@ -53,6 +56,30 @@ const Sidebar = () => {
             ))}
           </ul>
         </nav>
+
+        <div className="flex flex-col items-center mt-12">
+          <div className="flex flex-col items-center mb-10">
+            <img
+              className="w-20 h-20 rounded-full mb-3"
+              src="../Utilities/Images/account.jpg"
+              alt="User avatar"
+            />
+            <span className="text-2xl font-medium text-blue-900">Hitanshu</span>
+            <span className="text-sm font-light text-blue-700">Welcome!</span>
+          </div>
+
+          <div className="flex justify-center items-center">
+            <button
+              className="text-center w-auto px-6 py-3 rounded-lg text-base transition-all"
+              onClick={() => console.log("Log out")}
+            >
+              <div className="flex items-center space-x-3 text-lg font-semibold text-blue-800 cursor-pointer hover:text-blue-600">
+                <TbLogout2 className="text-2xl" />
+                <span>Log out</span>
+              </div>
+            </button>
+          </div>
+        </div>
       </div>
     </aside>
   );

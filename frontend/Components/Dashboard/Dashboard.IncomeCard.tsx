@@ -2,6 +2,7 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+
 interface TotalIncomeCardProps {
   Name: string;
   dataSet: number[];
@@ -14,11 +15,11 @@ const TotalIncomeCard: React.FC<TotalIncomeCardProps> = ({ Name, dataSet, totalT
     datasets: [
       {
         data: dataSet,  
-        borderColor: 'rgba(12, 158, 12, 0.5)',  
-        backgroundColor: 'rgba(255, 34, 0, 0.3)',  
-        borderWidth: 2,
+        borderColor: 'rgba(12, 158, 12, 0.7)',  // Smooth green color for the curve
+        backgroundColor: 'rgba(12, 158, 12, 0.2)',  // Light green for the shaded area
+        borderWidth: 3,
         fill: true,
-        tension: 0.5, 
+        tension: 0.4, // Make the curve smoother
         pointRadius: 0,  
         pointHoverRadius: 0,
       },
@@ -34,16 +35,32 @@ const TotalIncomeCard: React.FC<TotalIncomeCardProps> = ({ Name, dataSet, totalT
     },
     plugins: {
       legend: { display: false }, 
+    },
+    elements: {
+      line: {
+        tension: 0.4, 
+        borderCapStyle: 'round', 
+      },
+      point: {
+        radius: 0,
+      },
     }
   };
 
   return (
-    <div className="bg-[#a0d8f3] shadow-lg rounded-2xl p-4 w-72 flex items-center justify-between h-44 mx-4 px-5">
+    <div className="bg-gradient-to-br from-[#add8e6] to-[#87cefa] shadow-lg rounded-2xl p-6 w-80 flex items-center justify-between h-44 px-6">
       <div className="flex flex-col justify-between flex-1 h-full">
-        <div className="text-gray-500 text-xl inline">{Name}</div>
-        <div className="text-black text-2xl font-semibold">₹ {totalTransaction.toLocaleString()}</div>
+        <div>
+          <div className="text-gray-700 text-xl font-semibold">{Name}</div>
+          <div className="text-gray-500 text-sm">Income Overview</div>
+        </div>
+        
+        <div className="text-black text-3xl font-semibold mt-4">
+          ₹ {totalTransaction.toLocaleString()}
+        </div>
       </div>
-      <div className="w-24 h-20">
+      
+      <div className="w-32 h-28 mt-2">
         <Line data={data} options={options} />
       </div>
     </div>

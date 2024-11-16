@@ -29,10 +29,22 @@ const TransactionHistory = () => {
   }, []);
 
   return (
-    <div className="w-96 bg-gray-50 mt-4 h-96 p-4 overflow-y-auto rounded-md shadow-lg flex flex-col gap-y-3">
-      {transactions.slice(0, 10).map((transaction) => (
-        <HistoryCard key={transaction.id} transaction={transaction} />
-      ))}
+    <div className="w-[430px] max-w-2xl bg-gradient-to-b from-[#add8e6] to-[#87cefa] rounded-2xl shadow-lg p-6 mt-4">
+      {/* Transaction History Heading */}
+      <div className="text-lg font-bold text-gray-800 mb-2">Transaction History</div>
+
+      {/* History Cards Section */}
+      <div className="space-y-1">
+        {transactions.slice(0, 7).map((transaction) => (
+          <div key={transaction.id}>
+            {/* History Card Content */}
+            <HistoryCard transaction={transaction} />
+            
+            {/* Horizontal Divider */}
+            <hr className="border-gray-300" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

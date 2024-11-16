@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import BudgetCard from '../Budget/Budget.BudgetCard.tsx';
-import { Budget } from '../../Interfaces/Interfaces'; // Assuming Budget interface is defined here
+import { Budget } from '../../Interfaces/Interfaces'; 
 
 const BudgetList = () => {
   const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [chartType, setChartType] = useState('doughnut'); // Single chart type for all cards
+  const [chartType, setChartType] = useState('doughnut'); 
 
   useEffect(() => {
     const fetchBudgets = async () => {
@@ -27,7 +27,9 @@ const BudgetList = () => {
   };
 
   return (
-    <div>
+    <div
+      className="bg-cover bg-center p-6"
+    >
       {/* Dropdown to select graph type (affects all cards) */}
       <div className="mb-4">
         <select
