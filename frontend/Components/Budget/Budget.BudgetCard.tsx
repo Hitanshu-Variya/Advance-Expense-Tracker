@@ -54,7 +54,7 @@ const BudgetCard = ({ budget, onUpdate, chartType }: BudgetCardProps) => {
     datasets: [
       {
         data: [expenseAmount, updatedBudget.amount - expenseAmount], // Expense vs Remaining budget
-        backgroundColor: ['#FF5733', '#D3D3D3'], // Red for Expense, Light Gray for Remaining Budget
+        backgroundColor: ['#FF5733', '#5ddfdb'], // Red for Expense, Light Gray for Remaining Budget
         hoverOffset: 4,
       },
     ],
@@ -144,65 +144,72 @@ const BudgetCard = ({ budget, onUpdate, chartType }: BudgetCardProps) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded shadow">
-      <h3 className="text-xl font-semibold">{budget.category}</h3>
+    <div
+      className="bg-[#c8ecf3] bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-20 p-6 rounded shadow-lg relative"
+      style={{
+        backdropFilter: 'blur(20px)',
+      }}
+    >
+      {/* Category Name */}
+      <h3 className="text-3xl font-semibold text-gray-200 mb-4">{budget.category}</h3>
 
       {/* Display the selected chart type (same type for all graphs) */}
-      <div className="mb-4">
-        {renderChart()}
+      <div className="mb-4" style={{ maxWidth: '300px', margin: '0px auto 80px auto', height: '250px', display: 'flex', justifyContent: 'center' }}>
+  {renderChart()}
+</div>
+
+      {/* Budget Details */}
+      <div className="absolute bottom-4 left-4">
+        <p className="text-sm text-gray-200">
+          Total Budget for {updatedBudget.period}: <strong>${updatedBudget.amount}</strong>
+        </p>
+        <p className="text-sm text-gray-200">
+          Total Expenses so far: <strong>${expenseAmount}</strong>
+        </p>
       </div>
 
-      {!isEditing ? (
-        <>
-          <p>Current Budget for {budget.period}: ${updatedBudget.amount}</p>
-          <p>Expense so far: ${expenseAmount}</p>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setIsEditing(true)}
-              className="text-blue-500"
-            >
-              Set Budget
-            </button>
+      {/* Editing Mode */}
+      {isEditing && (
+        <div className="absolute inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-10">
+          <div className="bg-[#c8ecf3] bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-20 shadow-lg max-w-md w-full mx-4 md:mx-8 p-6 rounded-lg">
+            <h3 className="text-xl font-semibold mb-4 text-white text-center">Set Budget</h3>
+            <div className="mb-4">
+              <input
+                type="number"
+                name="amount"
+                value={updatedBudget.amount}
+                onChange={handleInputChange}
+                className="border p-2 rounded w-full mb-2 bg-transparent text-white placeholder-gray-300"
+                placeholder="Enter Amount"
+              />
+            </div>
+            <div className="mb-4">
+              <select
+                name="period"
+                value={updatedBudget.period}
+                onChange={handleInputChange}
+                className="border p-2 rounded w-full bg-transparent text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="week" className="bg-[#2d3748] text-white hover:bg-blue-600">Week</option>
+                <option value="month" className="bg-[#2d3748] text-white hover:bg-blue-600">Month</option>
+                <option value="year" className="bg-[#2d3748] text-white hover:bg-blue-600">Year</option>
+              </select>
+            </div>
+            <div className="flex justify-between gap-2">
+              <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded">Save</button>
+              <button onClick={() => setIsEditing(false)} className="bg-red-500 text-white p-2 rounded">Cancel</button>
+            </div>
           </div>
-        </>
-      ) : (
-        <div>
-          <div className="mb-2">
-            <input
-              type="number"
-              name="amount"
-              value={updatedBudget.amount}
-              onChange={handleInputChange}
-              className="border p-2 rounded w-full mb-2"
-              placeholder="Enter Amount"
-            />
-          </div>
-          <div className="mb-2">
-            <select
-              name="period"
-              value={updatedBudget.period}
-              onChange={handleInputChange}
-              className="border p-2 rounded w-full"
-            >
-              <option value="week">Week</option>
-              <option value="month">Month</option>
-              <option value="year">Year</option>
-            </select>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={handleUpdate}
-              className="bg-blue-500 text-white p-2 rounded"
-            >
-              Save
-            </button>
-            <button
-              onClick={() => setIsEditing(false)}
-              className="bg-gray-500 text-white p-2 rounded"
-            >
-              Cancel
-            </button>
-          </div>
+        </div>
+      )}
+      {!isEditing && (
+        <div className="absolute bottom-4 right-4">
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-blue-500 text-white py-1 px-4 rounded-full"
+          >
+            Set Budget
+          </button>
         </div>
       )}
     </div>
