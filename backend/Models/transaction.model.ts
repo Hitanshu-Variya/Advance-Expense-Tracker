@@ -20,7 +20,8 @@ const TransactionSchema = new Schema<TransactionStructure>({
     category: {
         type: String,
         enum: ['Food', 'Transport', 'Health', 'Education', 'Entertainment', 'Shopping', 'Utilities', 'Others'],
-        required: true
+        required: true,
+        default: 'Food'
     },
     description: {
         type: String,

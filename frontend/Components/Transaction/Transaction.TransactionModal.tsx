@@ -19,7 +19,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
   const [formData, setFormData] = useState<TransactionData>({
     transactionName: '',
     amount: 0,
-    category: '',
+    category: 'Food',
     description: '',
     paymentMethod: 'cash',
     date: new Date().toISOString().split('T')[0],
