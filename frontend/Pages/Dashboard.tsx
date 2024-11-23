@@ -11,8 +11,20 @@ const Dashboard = () => {
   const [totalTransaction, setTotalTransaction] = useState({ income: 0, expense: 0 });
   const [incomeDataSet, setIncomeDataSet] = useState<number[]>([]);
   const [expenseDataSet, setExpenseDataSet] = useState<number[]>([]);
-  const [budgetData, setBudgetData] = useState<number[]>([]); // Budget data
-  const [expenseData, setExpenseData] = useState<number[]>([]); // Actual expense data
+  const [budgetData, setBudgetData] = useState<number[]>([]); 
+  const [expenseData, setExpenseData] = useState<number[]>([]); 
+  const [username, setUsername] = useState<string>("");
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/profile/get-profile`, {
+        withCredentials: true,
+      });
+      setUsername(response.data.name);
+    };
+
+    fetchUsername();
+  }, []);
 
   const fetchTotalIncome = async () => {
     try {
@@ -104,7 +116,7 @@ const Dashboard = () => {
           >
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-2xl mt-2 font-bold text-white">Hello Hitanshu! 👋</h1>
+                <h1 className="text-2xl mt-2 font-bold text-white">Hello {username ? username : "User"}! 👋</h1>
               </div>
 
               <div className="text-right">

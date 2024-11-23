@@ -1,4 +1,4 @@
-import { Types, Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { TransactionStructure } from "../Interfaces/Interfaces";
 
 const TransactionSchema = new Schema<TransactionStructure>({
@@ -39,6 +39,7 @@ const TransactionSchema = new Schema<TransactionStructure>({
     transactionType: {
         type: String,
         enum: ['income', 'expense'],
+        default: 'income'
     }
 }, {timestamps: true});
 

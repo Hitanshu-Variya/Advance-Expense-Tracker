@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 import transaction from '../Models/transaction.model';
 
 const getAllTransactions = async (req: Request, res: Response) => {
@@ -12,11 +12,22 @@ const getAllTransactions = async (req: Request, res: Response) => {
   }
 };
 
+const getAllTransactionsBYID = async (req: Request, res: Response) => {
+  try {
+    const transactions = await transaction.find({ _id: req.params.id  });
+    res.status(200).json(transactions);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching transactions' });
+    console.log(error);
+  }
+};
+
 const getTransactionsByCategory = async (req: Request, res: Response) => {
+  const { userID } = req;
   const { category } = req.params;
 
   try {
-    const transactions = await transaction.find({ category: category });
+    const transactions = await transaction.find({ category: category, createdBy: userID });
 
     const incomeTransactions = transactions.filter(tx => tx.transactionType === 'income');
     const expenseTransactions = transactions.filter(tx => tx.transactionType === 'expense');
@@ -35,14 +46,14 @@ const addTransaction = async (req: Request, res: Response) => {
   try {
     const { transactionName, amount, category, description, paymentMethod, date, transactionType } = req.body;
     const newTransaction = new transaction({
-      createdBy: req.userID as unknown as Types.ObjectId, 
+      createdBy: req.userID as unknown as mongoose.Types.ObjectId, 
       transactionName,
       amount,
       category,
       description,
       paymentMethod,
       date,
-      transactionType
+      transactionType: transactionType.toLowerCase()
     });
     await newTransaction.save();
     res.status(201).json(newTransaction);
@@ -55,9 +66,8 @@ const addTransaction = async (req: Request, res: Response) => {
 const updateTransaction = async (req: Request, res: Response) => {
   try {
     const { id } = req.params; 
-    const { userID } = req; 
 
-    const updatedTransaction = await transaction.findOneAndUpdate({ _id: id, createdBy: userID }, req.body, {
+    const updatedTransaction = await transaction.findOneAndUpdate({ _id: id }, req.body, {
         new: true,
         runValidators: true,
       }
@@ -99,13 +109,15 @@ const latestTransaction = async (req: Request, res: Response) => {
 
 const totalIncome = async (req: Request, res: Response) => {
   try {
+    const { userID } = req;
+    const userIDObjectId = new mongoose.Types.ObjectId(userID);
     const [totalIncomeResult] = await transaction.aggregate([
-      { $match: { transactionType: 'income' } },
+      { $match: { transactionType: 'income', createdBy: userIDObjectId } },
       { $group: { _id: null, total: { $sum: "$amount" } } }
     ]);
 
     const recentIncomeTransactions = await transaction
-      .find({ transactionType: 'income' })
+      .find({ transactionType: 'income', createdBy: userIDObjectId })
       .sort({ date: -1 }) 
       .limit(10)          
       .select("amount");  
@@ -121,13 +133,15 @@ const totalIncome = async (req: Request, res: Response) => {
 
 const totalExpense = async (req: Request, res: Response) => {
   try {
+    const { userID } = req;
+    const userIDObjectId = new mongoose.Types.ObjectId(userID);
     const [totalExpenseResult] = await transaction.aggregate([
-      { $match: { transactionType: 'expense' } },
+      { $match: { transactionType: 'expense', createdBy: userIDObjectId } },
       { $group: { _id: null, total: { $sum: "$amount" } } }
     ]);
 
     const recentExpenseTransactions = await transaction
-      .find({ transactionType: 'expense' })
+      .find({ transactionType: 'expense', createdBy: userIDObjectId })
       .sort({ date: -1 })  
       .limit(10)           
       .select("amount");   
@@ -141,4 +155,4 @@ const totalExpense = async (req: Request, res: Response) => {
   }
 };
 
-export { getAllTransactions, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome };
+export { getAllTransactions, getAllTransactionsBYID, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome };

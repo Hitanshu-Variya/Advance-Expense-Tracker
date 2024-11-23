@@ -16,8 +16,9 @@ interface Transaction {
 }
 
 interface TransactionListProps {
-  onNewTransaction: () => void;
   searchParams: { attribute: string; value: string };
+  setIsEditData: (value: {}) => void;
+  handleNewTransaction: () => void;
 }
 
 // Helper function to format date into DD-MM-YYYY
@@ -30,10 +31,27 @@ const formatDate = (date: string): string => {
 };
 
 const TransactionList: React.FC<TransactionListProps> = ({
-  onNewTransaction,
   searchParams,
+  setIsEditData,
+  handleNewTransaction
 }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const handleEdit = async (id: string) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/data/get-transactions/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      setIsEditData(response.data);
+      handleNewTransaction();
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
 
   const fetchTransactions = async () => {
     try {
@@ -51,7 +69,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   useEffect(() => {
     fetchTransactions();
-  }, [onNewTransaction]);
+  }, []);
 
   const filteredTransactions = transactions.filter((transaction) =>
     searchParams.attribute
@@ -111,7 +129,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
               {/* Edit & Delete Buttons */}
               <div className="flex space-x-2">
                 <button
-                  onClick={() => onNewTransaction()}
+                  onClick={() => handleEdit(transaction._id)}
                   className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
                 >
                   <FaEdit />

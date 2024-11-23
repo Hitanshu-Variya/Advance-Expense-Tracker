@@ -19,6 +19,7 @@ const TransactionPage = () => {
   const [refreshTransactions, setRefreshTransactions] = useState(false);
   const [searchParams, setSearchParams] = useState({ attribute: "", value: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditData, setIsEditData] = useState({});
 
   const handleNewTransaction = () => {
     setIsModalOpen(true);
@@ -62,14 +63,16 @@ const TransactionPage = () => {
         />
         <TransactionList
           key={refreshTransactions ? 1 : 0}
-          onNewTransaction={handleNewTransaction}
           searchParams={searchParams}
+          setIsEditData={setIsEditData}
+          handleNewTransaction={handleNewTransaction}
         />
         
         <TransactionModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           onSubmit={handleAddTransaction}
+          editData={isEditData}
         />
       </div>
     </div>
