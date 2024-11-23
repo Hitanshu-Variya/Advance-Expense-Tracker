@@ -44,17 +44,14 @@ const signup = async (req: Request, res: Response) => {
       email: newUser.email
     });
 
-    categories.forEach(async (category) => {
-      const existingBudget = await BudgetModel.findOne({ category });
-      if (!existingBudget) {
-        await BudgetModel.create({
-          userID: newUser._id,
-          category,
-          amount: 1000, 
-          period: 'month', 
-        });
-      }
-    });
+    await Promise.all(categories.map(async (category) => {
+      await BudgetModel.create({
+        userID: newUser._id,
+        category,
+        amount: 1000,
+        period: 'week'
+      });
+    }));
 
     await SendVerificationCode(newUser.username, newUser.email, verificationCode);
 

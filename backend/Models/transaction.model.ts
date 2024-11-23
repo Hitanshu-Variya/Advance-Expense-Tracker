@@ -31,6 +31,7 @@ const TransactionSchema = new Schema<TransactionStructure>({
         type: String,
         required: true,
         enum: ['cash', 'credit', 'debit', 'other'],
+        default: 'cash'
     },
     date: {
         type: Date,

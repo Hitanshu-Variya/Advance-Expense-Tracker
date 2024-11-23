@@ -6,20 +6,22 @@ interface TransactionModalProps {
   onClose: () => void;
   onSubmit: (data: TransactionData) => void;
   editData?: Transaction | null;
+  setIsEditData: (data: Transaction | null) => void;
 }
 
 const TransactionModal: React.FC<TransactionModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
-  editData
+  editData,
+  setIsEditData
 }) => {
   const [formData, setFormData] = useState<TransactionData>({
     transactionName: '',
     amount: 0,
     category: '',
     description: '',
-    paymentMethod: '',
+    paymentMethod: 'cash',
     date: new Date().toISOString().split('T')[0],
     transactionType: 'expense'
   });
@@ -53,7 +55,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error updating transaction:", error);
+      console.error("Error updating transaction:", error); 
     }
   };
 
@@ -62,6 +64,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
 
     if(editData){
       handleUpdateTransaction();
+      setIsEditData(null);
     } else {
       onSubmit(formData);
       setFormData({
