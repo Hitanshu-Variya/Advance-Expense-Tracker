@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Budget } from '../../Interfaces/Interfaces'; // Assuming Budget interface is defined here
-import { Doughnut, Bar, Pie, PolarArea, Radar } from 'react-chartjs-2';
+import { Doughnut, Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
 // Register necessary components
@@ -127,10 +127,10 @@ const BudgetCard = ({ budget, onUpdate, chartType }: BudgetCardProps) => {
     });
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (budgetId: string) => {
     try {
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}/budget/update-budget/${budget._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/budget/update-budget/${budgetId}`,
         updatedBudget,
         {
           withCredentials: true,
@@ -196,7 +196,12 @@ const BudgetCard = ({ budget, onUpdate, chartType }: BudgetCardProps) => {
               </select>
             </div>
             <div className="flex justify-between gap-2">
-              <button onClick={handleUpdate} className="bg-blue-500 text-white p-2 rounded">Save</button>
+              <button 
+                onClick={() => handleUpdate(budget._id)} 
+                className="bg-blue-500 text-white p-2 rounded"
+              >
+                Save
+              </button>
               <button onClick={() => setIsEditing(false)} className="bg-red-500 text-white p-2 rounded">Cancel</button>
             </div>
           </div>

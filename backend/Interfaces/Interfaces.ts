@@ -7,6 +7,10 @@ interface UserStructure {
     email: string,
     lastLogin: Date,
     isVerified: boolean,
+    contactNumber?: string;
+    gender: 'male' | 'female' | 'other' | 'prefer not to say';
+    language: string;
+    dateOfBirth?: Date;
     resetPasswordToken: string | undefined,
     resetPasswordExpiresAt: Date | undefined,
     verificationCode: string | undefined,

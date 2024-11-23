@@ -6,6 +6,7 @@ import transactionRoutes from "../Routes/transaction.routes.ts";
 import budgetRoutes from "../Routes/budget.routes.ts";
 import ConnectToDB from "../Database/ConnectToDB.ts"
 import cookieParser from 'cookie-parser';
+import profileRoutes from "../Routes/profile.routes.ts";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ app.use((_, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/data", transactionRoutes);
 app.use('/budget', budgetRoutes);
+app.use('/profile', profileRoutes);
 
 app.listen(PORT, () => {
     ConnectToDB();

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaHome, FaWallet, FaChartPie, FaFileInvoiceDollar, FaCog, FaUser } from 'react-icons/fa';
 import { TbLogout2 } from "react-icons/tb";
@@ -6,6 +7,18 @@ import { TbLogout2 } from "react-icons/tb";
 const Sidebar = () => {
   const navigate = useNavigate();
   const [tooltip, setTooltip] = useState('');
+  const [username, setUsername] = useState<string>("");
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/profile/get-profile`, {
+        withCredentials: true,
+      });
+      setUsername(response.data.name);
+    };
+
+    fetchUsername();
+  }, []);
 
   const handleMouseEnter = (text: string) => {
     setTooltip(text);
@@ -13,6 +26,17 @@ const Sidebar = () => {
 
   const handleMouseLeave = () => {
     setTooltip('');
+  };
+
+  const handlelogout = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`);
+      if(response.status === 201) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (
@@ -30,8 +54,6 @@ const Sidebar = () => {
               { name: "Home", icon: <FaHome />, path: "/dashboard" },
               { name: "Transactions", icon: <FaWallet />, path: "/transactions" },
               { name: "Budget", icon: <FaFileInvoiceDollar />, path: "/budget" },
-              { name: "Report", icon: <FaChartPie />, path: "/report" },
-              { name: "Settings", icon: <FaCog />, path: "/settings" },
               { name: "Profile", icon: <FaUser />, path: "/profile" },
             ].map((item) => (
               <li key={item.name}>
@@ -64,14 +86,14 @@ const Sidebar = () => {
               src="../Utilities/Images/account.jpg"
               alt="User avatar"
             />
-            <span className="text-2xl font-medium text-blue-900">Hitanshu</span>
+            <span className="text-2xl font-medium text-blue-900">{username ? username : "User"}</span>
             <span className="text-sm font-light text-blue-700">Welcome!</span>
           </div>
 
           <div className="flex justify-center items-center">
             <button
               className="text-center w-auto px-6 py-3 rounded-lg text-base transition-all"
-              onClick={() => console.log("Log out")}
+              onClick={handlelogout}
             >
               <div className="flex items-center space-x-3 text-lg font-semibold text-blue-800 cursor-pointer hover:text-blue-600">
                 <TbLogout2 className="text-2xl" />

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "backend": "nodemon --config ts-node ./backend/src/index.ts",
+    "backend": "nodemon --config ts-node ./src/index.ts",
     "build": "tsc"
   },
   "keywords": [],

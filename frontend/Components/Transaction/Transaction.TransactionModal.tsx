@@ -1,41 +1,80 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 interface TransactionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (transactionData: {
-    transactionName: string;
-    amount: number;
-    category: string;
-    description?: string;
-    paymentMethod: string;
-    date: string;
-    transactionType: string;
-  }) => void;
+  onSubmit: (data: TransactionData) => void;
+  editData?: Transaction | null;
 }
 
-const initialTransactionData = {
-  transactionName: "",
-  amount: 0,
-  category: "Food",
-  description: "",
-  paymentMethod: "cash",
-  date: new Date().toISOString().slice(0, 10),
-  transactionType: "",
-};
+const TransactionModal: React.FC<TransactionModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  editData
+}) => {
+  const [formData, setFormData] = useState<TransactionData>({
+    transactionName: '',
+    amount: 0,
+    category: '',
+    description: '',
+    paymentMethod: '',
+    date: new Date().toISOString().split('T')[0],
+    transactionType: 'expense'
+  });
 
-const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [transactionData, setTransactionData] = useState(initialTransactionData);
+  useEffect(() => {
+    if (editData) {
+      setFormData({
+        transactionName: editData[0]?.transactionName,
+        amount: editData[0]?.amount,
+        category: editData[0]?.category,
+        description: editData[0]?.description || '',
+        paymentMethod: editData[0]?.paymentMethod,
+        date: editData[0]?.date,
+        transactionType: editData[0]?.transactionType
+      });
+    }
+  }, [editData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setTransactionData({ ...transactionData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleUpdateTransaction = async () => {
+    try {
+      const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/data/update-transaction/${editData[0]?._id}`, formData, {
+        withCredentials: true,
+      });
+
+      if(response.status === 200){
+        onClose();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error updating transaction:", error);
+    }
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(transactionData);
-    setTransactionData(initialTransactionData);
-    onClose();
+
+    if(editData){
+      handleUpdateTransaction();
+    } else {
+      onSubmit(formData);
+      setFormData({
+        transactionName: '',
+        amount: 0,
+        category: '',
+        description: '',
+        paymentMethod: '',
+        date: new Date().toISOString().split('T')[0],
+        transactionType: 'expense'
+      });
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -43,7 +82,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto relative">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Add New Transaction</h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">{editData ? 'Edit Transaction' : 'Add New Transaction'}</h2>
         
         <form onSubmit={handleFormSubmit} className="space-y-4">
           <div className="flex flex-col">
@@ -51,7 +90,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <input
               type="text"
               name="transactionName"
-              value={transactionData.transactionName}
+              value={formData.transactionName}
               onChange={handleInputChange}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="e.g., Groceries"
@@ -64,7 +103,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <input
               type="number"
               name="amount"
-              value={transactionData.amount}
+              value={formData.amount}
               onChange={handleInputChange}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               min="0"
@@ -77,7 +116,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <label className="text-gray-600">Transaction Type</label>
             <select
               name="transactionType"
-              value={transactionData.transactionType}
+              value={formData.transactionType}
               onChange={handleInputChange}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
@@ -90,7 +129,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <label className="text-gray-600">Category</label>
             <select
               name="category"
-              value={transactionData.category}
+              value={formData.category}
               onChange={handleInputChange}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
@@ -109,7 +148,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <label className="text-gray-600">Description</label>
             <textarea
               name="description"
-              value={transactionData.description}
+              value={formData.description}
               onChange={handleInputChange}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Add a description (optional)"
@@ -121,7 +160,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <label className="text-gray-600">Payment Method</label>
             <select
               name="paymentMethod"
-              value={transactionData.paymentMethod}
+              value={formData.paymentMethod}
               onChange={handleInputChange}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
@@ -136,9 +175,15 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
             <label className="text-gray-600">Date</label>
             <input
               type="date"
-              name="date"
-              value={transactionData.date}
-              onChange={handleInputChange}
+              name="date" 
+              value={formData.date ? new Date(formData.date).toISOString().split('T')[0] : ''}
+              onChange={(e) => {
+                if (e.target.value) {
+                  const date = new Date(e.target.value);
+                  const formattedDate = date.toISOString().split('T')[0];
+                  setFormData({ ...formData, date: formattedDate });
+                }
+              }}
               className="p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
@@ -156,7 +201,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({ isOpen, onClose, on
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded-md shadow hover:bg-blue-600 focus:outline-none"
             >
-              Add Transaction
+              {editData ? 'Update Transaction' : 'Add Transaction'}
             </button>
           </div>
         </form>

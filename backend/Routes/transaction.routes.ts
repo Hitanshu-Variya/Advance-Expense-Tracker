@@ -1,9 +1,10 @@
 import express from "express";
 import verifyToken from "../middleware/verifyToken.ts";
-import { getAllTransactions, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome } from "../Controllers/Transaction.controller.ts";
+import { getAllTransactions, getAllTransactionsBYID, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome } from "../Controllers/Transaction.controller.ts";
 const router = express.Router();
 
 router.get('/get-all-transactions', verifyToken, getAllTransactions);
+router.get('/get-transactions/:id', verifyToken, getAllTransactionsBYID);
 router.get('/get-by-category/:category', verifyToken, getTransactionsByCategory);
 router.post('/add-transaction', verifyToken, addTransaction);
 router.put('/update-transaction/:id', verifyToken, updateTransaction);

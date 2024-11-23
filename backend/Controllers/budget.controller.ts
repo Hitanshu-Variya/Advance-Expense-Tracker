@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
 import BudgetModel from '../Models/budget.model.ts';
 import transaction from '../Models/transaction.model.ts';
+import mongoose from 'mongoose';
 
 const getBudgetsByUser = async (req: Request, res: Response) => {
   const { userID } = req;
+  const userIDObjectId = new mongoose.Types.ObjectId(userID);
+  
   try {
-    const budgets = await BudgetModel.find({ userID });
+    const budgets = await BudgetModel.find({ userID: userIDObjectId });
 
     if (budgets.length === 0) {
       return res.status(404).json({ message: 'No budgets found for this user' });
@@ -24,6 +27,7 @@ const updateBudget = async (req: Request, res: Response) => {
 
   try {
     const budget = await BudgetModel.findById(id);
+    console.log(budget);
     if (!budget) return res.status(404).json({ message: 'Budget not found' });
 
     if (category) budget.category = category;
@@ -54,13 +58,14 @@ const deleteBudget = async (req: Request, res: Response) => {
 
 const getBudgetAndExpenses = async (req: Request, res: Response) => {
   const { userID } = req; 
+  const userIDObjectId = new mongoose.Types.ObjectId(userID);
   
   try {
-    const budgets = await BudgetModel.find({ userID });
-    const transactions = await transaction.find({ createdBy: userID });
+    const budgets = await BudgetModel.find({ userID: userIDObjectId });
+    const transactions = await transaction.find({ createdBy: userIDObjectId });
 
     if (budgets.length === 0 && transactions.length === 0) {
-      return res.status(404).json({ message: 'No budget or expense data found for this user' });
+      return res.status(400).json({ message: 'No budget or expense data found for this user' });
     }
 
     const expenses = transactions.filter(tx => tx.transactionType === 'expense');
