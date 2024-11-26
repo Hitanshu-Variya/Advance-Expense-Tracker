@@ -5,7 +5,8 @@
   "scripts": {
     "backend": "nodemon --config ts-node ./src/index.ts",
     "build": "tsc",
-    "start": "node dist/src/index.js"
+    "start": "node dist/src/index.js",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
