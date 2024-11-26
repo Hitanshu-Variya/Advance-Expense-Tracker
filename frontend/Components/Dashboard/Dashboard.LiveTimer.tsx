@@ -7,7 +7,12 @@ const LiveTimer = () => {
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
-      const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+      const options = {
+        weekday: 'long' as const,
+        year: 'numeric' as const,
+        month: 'long' as const,
+        day: 'numeric' as const
+      };
 
       setTime(now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }));
       setDate(now.toLocaleDateString("en-US", options));

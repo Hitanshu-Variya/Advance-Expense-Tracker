@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaHome, FaWallet, FaChartPie, FaFileInvoiceDollar, FaCog, FaUser } from 'react-icons/fa';
+import { FaHome, FaWallet, FaFileInvoiceDollar, FaUser } from 'react-icons/fa';
 import { TbLogout2 } from "react-icons/tb";
 
 const Sidebar = () => {

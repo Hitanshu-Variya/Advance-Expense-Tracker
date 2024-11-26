@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import incomeImage from "../../Utilities/Images/income.png";
 import expenseImage from "../../Utilities/Images/expense.png";
-import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Icons for edit and delete
+import { FaEdit, FaTrashAlt } from "react-icons/fa"; 
 
-interface Transaction {
-  _id: string;
-  transactionName: string;
+interface TransactionData {
+  _id?: string;
   amount: number;
   category: string;
-  paymentMethod: string;
-  description?: string;
   date: string;
-  transactionType: string; // "income" or "expense"
+  transactionName: string,
+  description?: string,
+  paymentMethod: string,
+  transactionType: string
 }
 
 interface TransactionListProps {
   searchParams: { attribute: string; value: string };
-  setIsEditData: (value: Transaction | null) => void;
+  setIsEditData: (value: TransactionData[] | null) => void;
   handleNewTransaction: () => void;
 }
 
@@ -35,7 +35,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   setIsEditData,
   handleNewTransaction
 }) => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<TransactionData[]>([]);
 
   const handleEdit = async (id: string) => {
     try {
@@ -73,7 +73,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
 
   const filteredTransactions = transactions.filter((transaction) =>
     searchParams.attribute
-      ? transaction[searchParams.attribute as keyof Transaction]
+      ? transaction[searchParams.attribute as keyof TransactionData]
           ?.toString()
           .toLowerCase()
           .includes(searchParams.value.toLowerCase())
@@ -140,12 +140,14 @@ const TransactionList: React.FC<TransactionListProps> = ({
               {/* Edit & Delete Buttons */}
               <div className="flex space-x-2">
                 <button
+                  // @ts-ignore
                   onClick={() => handleEdit(transaction._id)}
                   className="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
                 >
                   <FaEdit />
                 </button>
                 <button
+                  // @ts-ignore
                   onClick={() => handleDelete(transaction._id)}
                   className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600"
                 >

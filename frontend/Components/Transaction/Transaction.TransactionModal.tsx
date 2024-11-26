@@ -1,12 +1,23 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
+interface TransactionData {
+  _id?: string;
+  amount: number;
+  category: string;
+  date: string;
+  transactionName: string,
+  description: string,
+  paymentMethod: string,
+  transactionType: string
+}
+
 interface TransactionModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: TransactionData) => void;
-  editData?: Transaction | null;
-  setIsEditData: (data: Transaction | null) => void;
+  editData?: TransactionData[] | null;
+  setIsEditData: (data: TransactionData[] | null) => void;
 }
 
 const TransactionModal: React.FC<TransactionModalProps> = ({
@@ -46,6 +57,8 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
 
   const handleUpdateTransaction = async () => {
     try {
+      if(!editData) return;
+
       const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/data/update-transaction/${editData[0]?._id}`, formData, {
         withCredentials: true,
       });

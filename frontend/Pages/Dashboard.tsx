@@ -7,6 +7,11 @@ import TransactionHistory from '../Components/Dashboard/Dashboard.transactionHis
 import BudgetSummaryGraph from '../Components/Budget/Budget.BudgetSummaryGraph.tsx';
 import { categories } from '../Interfaces/Interfaces.ts';
 
+type Category = 'Food' | 'Transport' | 'Health' | 'Education' | 'Entertainment' | 'Shopping' | 'Utilities' | 'Others';
+interface CategoryTotals {
+  [key: string]: number;
+}
+
 const Dashboard = () => {
   const [totalTransaction, setTotalTransaction] = useState({ income: 0, expense: 0 });
   const [incomeDataSet, setIncomeDataSet] = useState<number[]>([]);
@@ -56,17 +61,14 @@ const Dashboard = () => {
         withCredentials: true,
       });
 
-      const budgetAmounts = response.data.budgets.map((budget: any) => budget.amount);
+      // const budgetAmounts = response.data.budgets.map((budget: any) => budget.amount);
       const expenses = response.data.expenses;
 
       // Initialize category totals with 0 in the fixed order
-      const categoryTotals = categories.reduce((acc, category) => {
-        acc[category] = 0;
-        return acc;
-      }, {});
+      const categoryTotals: CategoryTotals = {};
 
       // Sum up expenses for each category
-      expenses.forEach((expense) => {
+      expenses.forEach((expense: { category: Category; amount: number }) => {
         if (categoryTotals.hasOwnProperty(expense.category)) {
           categoryTotals[expense.category] += expense.amount;
         }
@@ -79,7 +81,7 @@ const Dashboard = () => {
 
       // Extract budget amounts in the fixed order
       const budgetAmountsInOrder = categories.map((category) => {
-        const budget = response.data.budgets.find((b) => b.category === category);
+        const budget = response.data.budgets.find((b: { category: string }) => b.category === category);
         return budget ? budget.amount : 0; // Default to 0 if no budget for the category
       });
 
