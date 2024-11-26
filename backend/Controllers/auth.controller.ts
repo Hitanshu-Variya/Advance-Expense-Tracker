@@ -38,7 +38,6 @@ const signup = async (req: Request, res: Response) => {
     await newUser.save();
     GenerateJWTTokenAndCookie(newUser._id, res);
 
-
     await Promise.all(categories.map(async (category) => {
       await BudgetModel.create({
         userID: newUser._id,
@@ -47,10 +46,10 @@ const signup = async (req: Request, res: Response) => {
         period: 'week'
       });
     }));
-
+    
     await SendVerificationCode(newUser.username, newUser.email, verificationCode);
     res.status(201).json({
-      message: "successful signup"
+      message: "signup successful!"
     });
 
   } catch (error) {

@@ -66,17 +66,21 @@ const Dashboard = () => {
 
       // Initialize category totals with 0 in the fixed order
       const categoryTotals: CategoryTotals = {};
-
-      // Sum up expenses for each category
-      expenses.forEach((expense: { category: Category; amount: number }) => {
-        if (categoryTotals.hasOwnProperty(expense.category)) {
-          categoryTotals[expense.category] += expense.amount;
-        }
+      
+      // Initialize all categories with 0
+      categories.forEach(category => {
+        categoryTotals[category] = 0;
       });
 
+      // Sum up expenses for each category 
+      expenses.forEach((expense: { category: Category; amount: number }) => {
+        categoryTotals[expense.category] += expense.amount;
+      });
+      
+      
       // Map category totals based on the fixed order
       const expensesAmounts = categories.map((category) =>
-        categoryTotals[category] || 0, // Default to 0 if no expenses for the category
+        categoryTotals[category] || 0,
       );
 
       // Extract budget amounts in the fixed order
@@ -88,7 +92,6 @@ const Dashboard = () => {
       // Set state with ordered data
       setBudgetData(budgetAmountsInOrder);
       setExpenseData(expensesAmounts);
-
 
     } catch (error) {
       console.error("Error fetching budget data:", error);
