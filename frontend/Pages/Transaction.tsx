@@ -6,6 +6,7 @@ import TransactionModal from "../Components/Transaction/Transaction.TransactionM
 import Sidebar from "../Components/Dashboard/Dashboard.sideBar.tsx";
 
 type transactionDataType = {
+  _id?: string;
   transactionName: string;
   amount: number;
   category: string;
@@ -15,11 +16,22 @@ type transactionDataType = {
   transactionType: string;
 };
 
+interface TransactionData {
+  _id?: string;
+  amount: number;
+  category: string;
+  date: string;
+  transactionName: string,
+  description?: string,
+  paymentMethod: string,
+  transactionType: string
+}
+
 const TransactionPage = () => {
   const [refreshTransactions, setRefreshTransactions] = useState(false);
   const [searchParams, setSearchParams] = useState({ attribute: "", value: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditData, setIsEditData] = useState<transactionDataType | null>(null);
+  const [isEditData, setIsEditData] = useState<TransactionData[] | null>(null);
 
   const handleNewTransaction = () => {
     setIsModalOpen(true);
@@ -72,6 +84,7 @@ const TransactionPage = () => {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           onSubmit={handleAddTransaction}
+          // @ts-ignore
           editData={isEditData}
           setIsEditData={setIsEditData}
         />

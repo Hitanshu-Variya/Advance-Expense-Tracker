@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PasswordStrengthCheckerProps from '../Interfaces/Interfaces.ts';
+import { PasswordStrengthCheckerProps } from '../Interfaces/Interfaces.ts';
 
 const PasswordStrengthChecker: React.FC<PasswordStrengthCheckerProps> = ({ password }) => {
     const [passwordStrength, setPasswordStrength] = useState<string>('Empty');

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const HeroSection = () => {
   return (
     <main className="flex flex-col lg:flex-row items-start mt-10 md:mt-16">

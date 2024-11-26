@@ -38,8 +38,8 @@ const TotalIncomeCard: React.FC<TotalIncomeCardProps> = ({ Name, dataSet, totalT
     },
     elements: {
       line: {
-        tension: 0.4, 
-        borderCapStyle: 'round', 
+        tension: 0.4,
+        borderCapStyle: 'round' as const,
       },
       point: {
         radius: 0,

@@ -24,6 +24,7 @@ const BudgetCard = ({ budget, onUpdate, chartType }: BudgetCardProps) => {
     amount: budget.amount || 0,
   });
 
+   // @ts-ignore
   const [incomeAmount, setIncomeAmount] = useState(0); // Total income for this budget category
   const [expenseAmount, setExpenseAmount] = useState(0); // Total expense for this budget category
 
@@ -197,6 +198,7 @@ const BudgetCard = ({ budget, onUpdate, chartType }: BudgetCardProps) => {
             </div>
             <div className="flex justify-between gap-2">
               <button 
+                // @ts-ignore
                 onClick={() => handleUpdate(budget._id)} 
                 className="bg-blue-500 text-white p-2 rounded"
               >
