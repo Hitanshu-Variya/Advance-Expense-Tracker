@@ -38,7 +38,6 @@ const signup = async (req: Request, res: Response) => {
     await newUser.save();
     GenerateJWTTokenAndCookie(newUser._id, res);
 
-    
     await Promise.all(categories.map(async (category) => {
       await BudgetModel.create({
         userID: newUser._id,
