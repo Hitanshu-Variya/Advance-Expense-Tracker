@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import user from '../Models/user.model.ts';
+import user from '../Models/user.model';
 import bcrypt from 'bcryptjs';
 
 const getProfile = async (req: Request, res: Response) => {

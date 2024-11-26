@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import BudgetModel from '../Models/budget.model.ts';
-import transaction from '../Models/transaction.model.ts';
+import BudgetModel from '../Models/budget.model';
+import transaction from '../Models/transaction.model';
 import mongoose from 'mongoose';
 
 const getBudgetsByUser = async (req: Request, res: Response) => {

@@ -1,6 +1,6 @@
 import express from "express";
-import verifyToken from "../middleware/verifyToken.ts";
-import { getAllTransactions, getAllTransactionsBYID, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome } from "../Controllers/Transaction.controller.ts";
+import verifyToken from "../middleware/verifyToken";
+import { getAllTransactions, getAllTransactionsBYID, getTransactionsByCategory, addTransaction, updateTransaction, deleteTransaction, latestTransaction, totalExpense, totalIncome } from "../Controllers/Transaction.controller";
 const router = express.Router();
 
 router.get('/get-all-transactions', verifyToken, getAllTransactions);

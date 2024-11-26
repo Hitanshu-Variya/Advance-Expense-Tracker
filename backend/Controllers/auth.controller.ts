@@ -3,13 +3,13 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import user from "../Models/user.model";
 import { categories } from '../Interfaces/Interfaces';
-import BudgetModel from "../Models/budget.model.ts";
-import GenerateJWTTokenAndCookie from '../Utilities/GenerateJWTTokenAndCookies.ts';
-import GenerateVerificationCode from '../Utilities/GenerateVerificationCode.ts';
-import SendVerificationCode from '../NodeMailer/SendVerificationCode.ts';
-import SendWelcomeMail from '../NodeMailer/SendWelcomeMail.ts';
-import SendPasswordResetEmail from '../NodeMailer/SendPasswordResetEmail.ts';
-import SendResetSuccessfulMail from '../NodeMailer/SendResetSuccessfulMail.ts'
+import BudgetModel from "../Models/budget.model";
+import GenerateJWTTokenAndCookie from '../Utilities/GenerateJWTTokenAndCookies';
+import GenerateVerificationCode from '../Utilities/GenerateVerificationCode';
+import SendVerificationCode from '../NodeMailer/SendVerificationCode';
+import SendWelcomeMail from '../NodeMailer/SendWelcomeMail';
+import SendPasswordResetEmail from '../NodeMailer/SendPasswordResetEmail';
+import SendResetSuccessfulMail from '../NodeMailer/SendResetSuccessfulMail'
 
 const signup = async (req: Request, res: Response) => {
   try {
