@@ -12,7 +12,7 @@ const GenerateJWTTokenAndCookie = (userID:Types.ObjectId, res:Response) => {
     res.cookie("jwt", token, {
         maxAge: 10*24*60*60*1000,
         httpOnly: true,
-        sameSite: 'None',
+        sameSite: 'none',
         secure: true
     })
 };
