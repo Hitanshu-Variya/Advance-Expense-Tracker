@@ -1,12 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import authRoutes from "../Routes/auth.routes.ts";
-import transactionRoutes from "../Routes/transaction.routes.ts";
-import budgetRoutes from "../Routes/budget.routes.ts";
-import ConnectToDB from "../Database/ConnectToDB.ts"
+import authRoutes from "../Routes/auth.routes";
+import transactionRoutes from "../Routes/transaction.routes";
+import budgetRoutes from "../Routes/budget.routes";
+import ConnectToDB from "../Database/ConnectToDB"
 import cookieParser from 'cookie-parser';
-import profileRoutes from "../Routes/profile.routes.ts";
+import profileRoutes from "../Routes/profile.routes";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;

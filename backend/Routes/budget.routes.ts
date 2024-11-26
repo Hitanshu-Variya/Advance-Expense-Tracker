@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import verifyToken from "../middleware/verifyToken.ts";
-import { getBudgetsByUser, updateBudget, deleteBudget, getBudgetAndExpenses } from '../Controllers/budget.controller.ts';
+import verifyToken from "../middleware/verifyToken";
+import { getBudgetsByUser, updateBudget, deleteBudget, getBudgetAndExpenses } from '../Controllers/budget.controller';
 
 const router = Router();
 

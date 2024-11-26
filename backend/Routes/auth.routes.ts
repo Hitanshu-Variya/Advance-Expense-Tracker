@@ -1,6 +1,6 @@
 import express from 'express';
-import { checkAuth, signup, verifyEmail, forgetPassword, resetPassword, login, logout } from '../Controllers/auth.controller.ts';
-import verifyToken from '../middleware/verifyToken.ts';
+import { checkAuth, signup, verifyEmail, forgetPassword, resetPassword, login, logout } from '../Controllers/auth.controller';
+import verifyToken from '../middleware/verifyToken';
 const router = express.Router();
 
 router.post("/check-auth", verifyToken, checkAuth);
