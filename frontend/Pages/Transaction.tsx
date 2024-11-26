@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import FilterSection from "../Components/Transaction/Transaction.FilterSection.tsx";
 import TransactionList from "../Components/Transaction/Transaction.TransactionList.tsx";
@@ -19,7 +19,7 @@ const TransactionPage = () => {
   const [refreshTransactions, setRefreshTransactions] = useState(false);
   const [searchParams, setSearchParams] = useState({ attribute: "", value: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditData, setIsEditData] = useState({});
+  const [isEditData, setIsEditData] = useState<transactionDataType | null>(null);
 
   const handleNewTransaction = () => {
     setIsModalOpen(true);
@@ -73,6 +73,7 @@ const TransactionPage = () => {
           onClose={handleCloseModal}
           onSubmit={handleAddTransaction}
           editData={isEditData}
+          setIsEditData={setIsEditData}
         />
       </div>
     </div>

@@ -17,7 +17,7 @@ interface Transaction {
 
 interface TransactionListProps {
   searchParams: { attribute: string; value: string };
-  setIsEditData: (value: {}) => void;
+  setIsEditData: (value: Transaction | null) => void;
   handleNewTransaction: () => void;
 }
 
@@ -80,6 +80,17 @@ const TransactionList: React.FC<TransactionListProps> = ({
       : true
   );
 
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/data/delete-transaction/${id}`, { withCredentials: true });
+      if(response.status === 200){
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {filteredTransactions.length > 0 ? (
@@ -135,7 +146,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
                   <FaEdit />
                 </button>
                 <button
-                  onClick={() => console.log("Delete transaction")}
+                  onClick={() => handleDelete(transaction._id)}
                   className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600"
                 >
                   <FaTrashAlt />
