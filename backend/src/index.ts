@@ -26,6 +26,9 @@ app.use((_, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.send("Backend Working!")
+})
 app.use("/api/auth", authRoutes);
 app.use("/data", transactionRoutes);
 app.use('/budget', budgetRoutes);
