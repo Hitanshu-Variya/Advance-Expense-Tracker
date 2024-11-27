@@ -20,6 +20,11 @@ app.use(cors({
   credentials: true
 }));
 
+app.use((req, res, next) => {
+    console.log("Incoming Origin:", req.headers.origin); 
+    next();
+});
+
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
