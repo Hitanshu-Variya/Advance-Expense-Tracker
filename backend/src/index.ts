@@ -19,10 +19,16 @@ app.use(cors({
   methods: 'GET,POST,PUT,DELETE,OPTIONS',
   credentials: true
 }));
-app.use((_, res, next) => {
-    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-    res.header("Access-Control-Allow-Headers", "*");
-    res.header("Access-Control-Allow-Credentials", "true");
+app.use((req, res, next) => {
+    const allowedOrigin = process.env.CLIENT_URL; 
+    res.header("Access-Control-Allow-Origin", allowedOrigin);
+    res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS"); 
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization"); 
+    res.header("Access-Control-Allow-Credentials", "true"); 
+
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(204);
+    }
     next();
 });
 
