@@ -46,6 +46,9 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
         yield newUser.save();
         (0, GenerateJWTTokenAndCookies_1.default)(newUser._id, res);
+        res.status(201).json({
+            message: "signup successful!"
+        });
         yield Promise.all(Interfaces_1.categories.map((category) => __awaiter(void 0, void 0, void 0, function* () {
             yield budget_model_1.default.create({
                 userID: newUser._id,
@@ -55,9 +58,6 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         })));
         yield (0, SendVerificationCode_1.default)(newUser.username, newUser.email, verificationCode);
-        res.status(201).json({
-            message: "signup successful!"
-        });
     }
     catch (error) {
         console.log("Error: signup", error);

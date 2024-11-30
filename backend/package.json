@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "backend": "nodemon --config ts-node ./src/index.ts",
+    "dev": "nodemon --config nodemon.json",
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "vercel-build": "echo hello"
+    "vercel-build": "npm run build"
   },
   "keywords": [],
   "author": "",

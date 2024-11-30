@@ -15,19 +15,22 @@ const profile_routes_1 = __importDefault(require("../Routes/profile.routes"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 5000;
 const app = (0, express_1.default)();
+const allowedOrigins = ['https://expense-flow-three.vercel.app'];
+app.use((0, cors_1.default)({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)({
-    origin: process.env.CLIENT_URL,
-    methods: 'GET,POST,PUT,DELETE,OPTIONS',
-    credentials: true
-}));
-app.use((_, res, next) => {
-    res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-    res.header("Access-Control-Allow-Headers", "*");
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
-});
 app.get('/', (req, res) => {
     res.send("Backend Working!");
 });
