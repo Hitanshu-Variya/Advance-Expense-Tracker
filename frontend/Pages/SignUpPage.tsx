@@ -35,7 +35,7 @@ const SignUpPage = () => {
       }
 
     } catch (error_: any) {
-      console.error('Error logging in:', error_.response?.data || error_.message);
+      // console.error('Error logging in:', error_.response?.data || error_.message);
       const error = error_.response?.data?.error || "An error occurred. Please try again.";
       toast.error(error);
     } finally {
