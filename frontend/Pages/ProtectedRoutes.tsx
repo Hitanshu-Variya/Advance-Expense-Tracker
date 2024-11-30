@@ -34,7 +34,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <div>Loading...</div>; 
   }
 
-  console.log('Is Authenticated:', isAuthenticated);
   if (!isAuthenticated) {
     return <Navigate to="/login"/>;
   }
