@@ -9,39 +9,30 @@ const SignUpPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const {username, email, password, confirmPassword} = userDetails;
-
-    if(!username || !email || !password || !confirmPassword) {
-      const error = "All fields are necessary!";
-      toast.error(error);
-      return;
-    }
-
-    if(userDetails.password != userDetails.confirmPassword) {
-      const error = "Password and confirmPassword fields are not matching";
-      toast.error(error);
-      return;
-    }
-
-    setLoading(true);  
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/signup`, userDetails, {
-        withCredentials: true
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/signup`, {
+        username: userDetails.username,
+        email: userDetails.email,
+        password: userDetails.password,
+        confirmPassword: userDetails.confirmPassword
       });
-      if(response.status === 201) {
+      
+      if (response.data) {
+        // Handle successful signup
         navigate('/verify-email');
+        toast.success('Signup successful! Please verify your email.');
       }
-
-    } catch (error_: any) {
-      // console.error('Error logging in:', error_.response?.data || error_.message);
-      const error = error_.response?.data?.error || "An error occurred. Please try again.";
-      toast.error(error);
-    } finally {
-      setLoading(false); 
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        // Handle error response
+        toast.error(error.response.data.message || 'Signup failed');
+      } else {
+        toast.error('An unexpected error occurred');
+      }
     }
-  }
+  };
 
   return (
     <div className="bg-gray-700 h-screen flex items-center justify-center">
