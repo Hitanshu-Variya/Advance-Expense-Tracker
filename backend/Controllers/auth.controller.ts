@@ -17,11 +17,11 @@ const signup = async (req: Request, res: Response) => {
 
     const EmailalreadyExists = await user.findOne({ email });
     if (EmailalreadyExists) {
-      return res.status(400).json({ error: "Email already Exists! Please choose a different Email!" });
+      return res.status(400).json({ message: "Email already Exists! Please choose a different Email!" });
     }
 
     if (password !== confirmPassword) {
-      return res.status(400).json({ error: "Passwords do not match!" });
+      return res.status(400).json({ message: "Passwords do not match!" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -36,11 +36,9 @@ const signup = async (req: Request, res: Response) => {
       verificationCodeExpiresAt: Date.now() + 15 * 60 * 1000
     });
     await newUser.save();
-    GenerateJWTTokenAndCookie(newUser._id, res);
+    
+    const token = GenerateJWTTokenAndCookie(newUser._id, res);
 
-    res.status(201).json({
-      message: "signup successful!"
-    });
     await Promise.all(categories.map(async (category) => {
       await BudgetModel.create({
         userID: newUser._id,
@@ -52,9 +50,18 @@ const signup = async (req: Request, res: Response) => {
     
     await SendVerificationCode(newUser.username, newUser.email, verificationCode);
 
+    return res.status(201).json({
+      message: "Signup successful!",
+      user: {
+        id: newUser._id,
+        username: newUser.username,
+        email: newUser.email
+      }
+    });
+
   } catch (error) {
     console.log("Error: signup", error);
-    return res.status(500).json({ error: "Internal Server Error!" });
+    return res.status(500).json({ message: "Internal Server Error!" });
   }
 };
 
