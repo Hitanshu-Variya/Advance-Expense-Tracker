@@ -43,7 +43,7 @@ const Sidebar = () => {
     <aside className="w-20 md:w-24 lg:w-auto bg-gradient-to-b from-[#e0f7fa] to-[#b2ebf2] text-gray-800 shadow-lg h-screen rounded-l-xl">
       <div className="flex flex-col justify-between h-screen p-4">
         <div className="flex items-center justify-center mb-2">
-          <img className="w-16 xl:w-16" src="../Utilities/Images/Logo.png" alt="ExpenFlow logo" />
+          <img className="w-16 xl:w-16" src="/Images/Logo.png" alt="ExpenFlow logo" />
           <h1 className="text-base md:text-lg xl:text-xl font-semibold text-blue-800">Expense Flow</h1>
         </div>
 
@@ -83,7 +83,7 @@ const Sidebar = () => {
           <div className="flex flex-col items-center mb-10">
             <img
               className="w-20 h-20 rounded-full mb-3"
-              src="../Utilities/Images/account.jpg"
+              src="Images/account.jpg"
               alt="User avatar"
             />
             <span className="text-2xl font-medium text-blue-900">{username ? username : "User"}</span>

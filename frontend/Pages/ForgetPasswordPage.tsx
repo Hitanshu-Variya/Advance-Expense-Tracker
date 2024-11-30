@@ -32,7 +32,7 @@ const ForgetPasswordPage = () => {
         <div className="bg-slate-800 rounded-lg shadow-2xl shadow-gray-800 w-full max-w-4xl flex h-4/6">
             <div className="hidden md:flex md:items-center md:justify-center w-1/2 h-full">
                 <img
-                src="../Utilities/Images/ForgetPassword.png"
+                src="/Images/ForgetPassword.png"
                 alt="Illustration"
                 className="max-h-full max-w-full object-contain rounded-r-lg w-10/12"
                 />

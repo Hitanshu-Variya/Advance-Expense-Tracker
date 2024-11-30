@@ -15,8 +15,8 @@ const SendResetSuccessfulMail = async (username: UserStructure["username"], emai
             }
         });
 
-        const LogoPath = path.join(__dirname, '../Utilities/Images/Logo.png');
-        const PasswordResetSuccessTemplatePath = path.join(__dirname, '../Utilities/Images/PasswordResetSuccessTemplate.png');
+        const LogoPath = path.join(__dirname, '/Images/Logo.png');
+        const PasswordResetSuccessTemplatePath = path.join(__dirname, '/Images/PasswordResetSuccessTemplate.png');
 
         const mailDetails = {
             to: email,
@@ -25,11 +25,11 @@ const SendResetSuccessfulMail = async (username: UserStructure["username"], emai
             attachments: [{
                 filename: 'Logo.png',
                 path: LogoPath,
-                cid: '../Utilities/Images/Logo.png' 
+                cid: '/Images/Logo.png' 
             }, {
                 filename: 'PasswordResetSuccessTemplate.png',
                 path: PasswordResetSuccessTemplatePath,
-                cid: '../Utilities/Images/PasswordResetSuccessTemplate.png' 
+                cid: '/Images/PasswordResetSuccessTemplate.png' 
             }]
         };
 

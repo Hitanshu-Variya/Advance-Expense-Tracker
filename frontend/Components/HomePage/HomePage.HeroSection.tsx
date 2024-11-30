@@ -22,12 +22,12 @@ const HeroSection = () => {
 
         <div className="flex-1 justify-center align-center mt-10 md:mt-24 relative w-full lg:w-auto">
           <img
-            src="../Utilities/Images/Iphone.png"
+            src="/Images/Iphone.png"
             alt="Mobile app preview"
             className="w-1/4 top-36 sm:w-1/4 sm:top-40 md:w-3/12 md:top-32 lg:w-1/3 lg:top-12 absolute -right-10 z-10 -rotate-6"
           />
           <img
-            src="../Utilities/Images/macbook.png"
+            src="/Images/macbook.png"
             alt="Mobile app preview"
             className="w-full sm:4/12 md:w-11/12 mx-auto"
           />

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import incomeImage from "../../Utilities/Images/income.png";
-import expenseImage from "../../Utilities/Images/expense.png";
 import { FaEdit, FaTrashAlt } from "react-icons/fa"; 
 
 interface TransactionData {
@@ -112,8 +110,8 @@ const TransactionList: React.FC<TransactionListProps> = ({
                 <img
                   src={
                     transaction.transactionType === "income"
-                      ? incomeImage
-                      : expenseImage
+                      ? "/Images/income.png"
+                      : "/Images/expense.png"
                   }
                   alt={transaction.transactionType}
                   className="w-8 h-8"
