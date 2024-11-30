@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://expense-flow-sigma.vercel.app"
+          "value": "https://expense-flow-three.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
