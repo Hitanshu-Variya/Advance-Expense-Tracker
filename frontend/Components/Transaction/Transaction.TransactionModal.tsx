@@ -83,9 +83,9 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
       setFormData({
         transactionName: '',
         amount: 0,
-        category: '',
+        category: 'Food',
         description: '',
-        paymentMethod: '',
+        paymentMethod: 'cash',
         date: new Date().toISOString().split('T')[0],
         transactionType: 'expense'
       });
