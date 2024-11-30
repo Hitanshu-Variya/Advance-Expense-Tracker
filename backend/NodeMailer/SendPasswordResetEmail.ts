@@ -15,8 +15,8 @@ const SendPasswordResetEmail = async (username: UserStructure["username"], email
             }
         });
 
-        const LogoPath = path.join(__dirname, '/Images/Logo.png');
-        const ResetPasswordEmailTemplatePath = path.join(__dirname, '/Images/ResetPasswordTemplate.png');
+        const LogoPath = path.join(__dirname, '../Images/Logo.png');
+        const ResetPasswordEmailTemplatePath = path.join(__dirname, '../Images/ResetPasswordTemplate.png');
 
         const mailDetails = {
             to: email,
@@ -25,11 +25,11 @@ const SendPasswordResetEmail = async (username: UserStructure["username"], email
             attachments: [{
                 filename: 'Logo.png',
                 path: LogoPath,
-                cid: '/Images/Logo.png' 
+                cid: '../Images/Logo.png' 
             }, {
                 filename: 'ResetPasswordTemplate.png',
                 path: ResetPasswordEmailTemplatePath,
-                cid: '/Images/ResetPasswordTemplate.png' 
+                cid: '../Images/ResetPasswordTemplate.png' 
             }]
         };
 

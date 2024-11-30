@@ -26,8 +26,8 @@ const SendWelcomeMail = (email, username) => __awaiter(void 0, void 0, void 0, f
                 pass: process.env.EMAIL_PASSWORD
             }
         });
-        const LogoPath = path_1.default.join(__dirname, '/Images/Logo.png');
-        const WelcomeEmailTemplatePath = path_1.default.join(__dirname, '/Images/WelcomeTemplate.png');
+        const LogoPath = path_1.default.join(__dirname, '../Images/Logo.png');
+        const WelcomeEmailTemplatePath = path_1.default.join(__dirname, '../Images/WelcomeTemplate.png');
         const mailDetails = {
             to: email,
             subject: 'Welcome To Expense Flow',
@@ -35,11 +35,11 @@ const SendWelcomeMail = (email, username) => __awaiter(void 0, void 0, void 0, f
             attachments: [{
                     filename: 'Logo.png',
                     path: LogoPath,
-                    cid: '/Images/Logo.png'
+                    cid: '../Images/Logo.png'
                 }, {
                     filename: 'WelcomeTemplate.png',
                     path: WelcomeEmailTemplatePath,
-                    cid: '/Images/WelcomeTemplate.png'
+                    cid: '../Images/WelcomeTemplate.png'
                 }]
         };
         yield transporter.sendMail(mailDetails);
