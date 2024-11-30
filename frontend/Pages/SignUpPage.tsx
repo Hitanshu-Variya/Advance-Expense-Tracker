@@ -3,6 +3,7 @@ import axios from 'axios';
 import PasswordStrengthChecker from '../Components/PasswordStrengthChecker.tsx';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import axiosInstance from '../src/config/axios';
 
 const SignUpPage = () => {
   const [userDetails, setUserDetails] = useState({username: "", email: "", password: "", confirmPassword: ""});
@@ -11,8 +12,9 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/signup`, {
+      const response = await axiosInstance.post('/api/auth/signup', {
         username: userDetails.username,
         email: userDetails.email,
         password: userDetails.password,
@@ -25,12 +27,17 @@ const SignUpPage = () => {
         toast.success('Signup successful! Please verify your email.');
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        // Handle error response
-        toast.error(error.response.data.message || 'Signup failed');
+      if (axios.isAxiosError(error)) {
+        if (error.code === 'ECONNABORTED') {
+          toast.error('Request timed out. Please try again.');
+        } else {
+          toast.error(error.response?.data?.message || 'Signup failed');
+        }
       } else {
         toast.error('An unexpected error occurred');
       }
+    } finally {
+      setLoading(false);
     }
   };
 

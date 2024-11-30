@@ -39,18 +39,7 @@ const signup = async (req: Request, res: Response) => {
     
     const token = GenerateJWTTokenAndCookie(newUser._id, res);
 
-    await Promise.all(categories.map(async (category) => {
-      await BudgetModel.create({
-        userID: newUser._id,
-        category,
-        amount: 1000,
-        period: 'week'
-      });
-    }));
-    
-    await SendVerificationCode(newUser.username, newUser.email, verificationCode);
-
-    return res.status(201).json({
+    res.status(201).json({
       message: "Signup successful!",
       user: {
         id: newUser._id,
@@ -59,8 +48,22 @@ const signup = async (req: Request, res: Response) => {
       }
     });
 
+    Promise.all([
+      Promise.all(categories.map(async (category) => {
+        await BudgetModel.create({
+          userID: newUser._id,
+          category,
+          amount: 1000,
+          period: 'week'
+        });
+      })),
+      SendVerificationCode(newUser.username, newUser.email, verificationCode)
+    ]).catch(error => {
+      console.error('Post-signup tasks error:', error);
+    });
+
   } catch (error) {
-    console.log("Error: signup", error);
+    console.error("Error: signup", error);
     return res.status(500).json({ message: "Internal Server Error!" });
   }
 };
