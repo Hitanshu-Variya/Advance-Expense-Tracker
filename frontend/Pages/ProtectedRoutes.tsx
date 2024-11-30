@@ -31,7 +31,15 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>; 
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <h2 className="mt-4 text-xl font-semibold text-gray-700">Loading your expenses...</h2>
+          <p className="mt-2 text-gray-500">Please wait while we verify your session</p>
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
