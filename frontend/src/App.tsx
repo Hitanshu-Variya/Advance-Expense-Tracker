@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from '../Pages/ProtectedRoutes.tsx';
 import LandingPage from "../Pages/LandingPage.tsx"
 import SignUpPage from "../Pages/SignUpPage.tsx";
 import VerifyEmailPage from '../Pages/VerifyEmailPage.tsx'
@@ -16,21 +17,21 @@ import { Toaster } from "react-hot-toast";
 export default function App() {
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/verify-email" element={<VerifyEmailPage />} />
-        <Route path="/update-email-verification" element={<UpdateEmailVerificationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forget-password" element={<ForgetPasswordPage />} />
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/transactions" element={<Expense />} />
-        <Route path="/budget" element={<Budget />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-      </Routes>
-      <Toaster />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/update-email-verification" element={<ProtectedRoute><UpdateEmailVerificationPage /></ProtectedRoute>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forget-password" element={<ForgetPasswordPage />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/transactions" element={<ProtectedRoute><Expense /></ProtectedRoute>} />
+          <Route path="/budget" element={<ProtectedRoute><Budget /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/contact-us" element={<ContactUs />} />
+        </Routes>
+        <Toaster />
     </div>
   )
 }
