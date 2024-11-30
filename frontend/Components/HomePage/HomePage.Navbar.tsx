@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+interface NavbarProps {
+  onFeaturesClick: () => void;
+}
+
+const Navbar = ({ onFeaturesClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -20,10 +24,8 @@ const Navbar = () => {
       <nav className="hidden lg:flex space-x-8 text-gray-400 text-sm font-mono">
         <ul className="flex flex-col lg:flex-row lg:space-x-8">
           <li><a href="/" className="hover:underline">Home</a></li>
-          <li><a href="/services" className="hover:underline">Services</a></li>
-          <li><a href="/features" className="hover:underline">Features</a></li>
-          <li><a href="/payments" className="hover:underline">Payments</a></li>
-          <li><a href="/about" className="hover:underline">About us</a></li>
+          <li><button onClick={onFeaturesClick} className="hover:underline">Features</button></li>
+          <li><a href="/contact-us" className="hover:underline">Contact Us</a></li>
         </ul>
       </nav>
 

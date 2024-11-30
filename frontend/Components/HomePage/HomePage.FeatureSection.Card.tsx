@@ -13,7 +13,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ imagePath, cardTitle, cardDes
       <p className="text-gray-400 mb-4">
         {cardDescription}
       </p>
-      <a href="/" className="text-green-400 hover:underline">Read More &gt;</a>
     </div>
   );
 };

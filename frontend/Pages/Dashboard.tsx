@@ -61,35 +61,26 @@ const Dashboard = () => {
         withCredentials: true,
       });
 
-      // const budgetAmounts = response.data.budgets.map((budget: any) => budget.amount);
       const expenses = response.data.expenses;
-
-      // Initialize category totals with 0 in the fixed order
       const categoryTotals: CategoryTotals = {};
       
-      // Initialize all categories with 0
       categories.forEach(category => {
         categoryTotals[category] = 0;
       });
 
-      // Sum up expenses for each category 
       expenses.forEach((expense: { category: Category; amount: number }) => {
         categoryTotals[expense.category] += expense.amount;
       });
       
-      
-      // Map category totals based on the fixed order
       const expensesAmounts = categories.map((category) =>
         categoryTotals[category] || 0,
       );
 
-      // Extract budget amounts in the fixed order
       const budgetAmountsInOrder = categories.map((category) => {
         const budget = response.data.budgets.find((b: { category: string }) => b.category === category);
-        return budget ? budget.amount : 0; // Default to 0 if no budget for the category
+        return budget ? budget.amount : 0; 
       });
 
-      // Set state with ordered data
       setBudgetData(budgetAmountsInOrder);
       setExpenseData(expensesAmounts);
 
@@ -107,12 +98,9 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-black text-gray-200">
       <div className="flex">
-        {/* Sidebar */}
         <Sidebar />
 
-        {/* Main Content */}
         <div className="flex flex-col flex-1">
-          {/* Dark Blue Background Section */}
           <div
             className="w-full h-[33vh] p-6 bg-cover bg-center"
             style={{
