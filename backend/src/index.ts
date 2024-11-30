@@ -11,9 +11,17 @@ import profileRoutes from "../Routes/profile.routes";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = express();
-const allowedOrigins = [process.env.CLIENT_URL];
 
-app.use(cors());
+const allowedOrigins = [process.env.CLIENT_URL]; 
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,      
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+};
+
+app.use(cors(corsOptions));  
+
 app.use(express.json());
 app.use(cookieParser());
 
