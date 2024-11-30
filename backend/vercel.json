@@ -3,8 +3,8 @@
   "builds": [
     { "src": "dist/src/index.js", "use": "@vercel/node" }
   ],
-  "routes": [
-    { "src": "/(.*)", "dest": "dist/src/index.js" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "dist/src/index.js" }
   ],
   "headers": [
     {
@@ -12,7 +12,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://expense-flow-three.vercel.app"
+          "value": "https://expense-flow-sigma.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
