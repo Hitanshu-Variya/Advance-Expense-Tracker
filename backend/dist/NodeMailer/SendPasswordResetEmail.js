@@ -26,8 +26,8 @@ const SendPasswordResetEmail = (username, email, clientURL) => __awaiter(void 0,
                 pass: process.env.EMAIL_PASSWORD
             }
         });
-        const LogoPath = path_1.default.join(__dirname, '../Utilities/Images/Logo.png');
-        const ResetPasswordEmailTemplatePath = path_1.default.join(__dirname, '../Utilities/Images/ResetPasswordTemplate.png');
+        const LogoPath = path_1.default.join(__dirname, '/Images/Logo.png');
+        const ResetPasswordEmailTemplatePath = path_1.default.join(__dirname, '/Images/ResetPasswordTemplate.png');
         const mailDetails = {
             to: email,
             subject: 'Password Reset Link',
@@ -35,11 +35,11 @@ const SendPasswordResetEmail = (username, email, clientURL) => __awaiter(void 0,
             attachments: [{
                     filename: 'Logo.png',
                     path: LogoPath,
-                    cid: '../Utilities/Images/Logo.png'
+                    cid: '/Images/Logo.png'
                 }, {
                     filename: 'ResetPasswordTemplate.png',
                     path: ResetPasswordEmailTemplatePath,
-                    cid: '../Utilities/Images/ResetPasswordTemplate.png'
+                    cid: '/Images/ResetPasswordTemplate.png'
                 }]
         };
         yield transporter.sendMail(mailDetails);

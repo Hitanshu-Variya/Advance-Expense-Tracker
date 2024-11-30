@@ -15,8 +15,8 @@ const SendWelcomeMail = async (email: UserStructure["email"], username: UserStru
             }
         });
 
-        const LogoPath = path.join(__dirname, '../Utilities/Images/Logo.png');
-        const WelcomeEmailTemplatePath = path.join(__dirname, '../Utilities/Images/WelcomeTemplate.png');
+        const LogoPath = path.join(__dirname, '/Images/Logo.png');
+        const WelcomeEmailTemplatePath = path.join(__dirname, '/Images/WelcomeTemplate.png');
         
         const mailDetails = {
             to: email,
@@ -25,11 +25,11 @@ const SendWelcomeMail = async (email: UserStructure["email"], username: UserStru
             attachments: [{
                 filename: 'Logo.png',
                 path: LogoPath,
-                cid: '../Utilities/Images/Logo.png' 
+                cid: '/Images/Logo.png' 
             }, {
                 filename: 'WelcomeTemplate.png',
                 path: WelcomeEmailTemplatePath,
-                cid: '../Utilities/Images/WelcomeTemplate.png' 
+                cid: '/Images/WelcomeTemplate.png' 
             }]
         };
 

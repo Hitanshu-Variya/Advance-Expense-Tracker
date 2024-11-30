@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
   }
 });
 
-// Add a request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
     return config;

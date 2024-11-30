@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import profilePic from "../Utilities/Images/profile_side.png";
+import profilePic from "/Images/profile_side.png";
 import axios from 'axios';
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';

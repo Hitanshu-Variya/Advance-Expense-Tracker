@@ -108,7 +108,7 @@ const LoginPage = () => {
 
         <div className="hidden lg:flex lg:items-center lg:justify-center w-1/2 h-full">
             <img
-              src="../Utilities/Images/Login.png"
+              src="/Images/Login.png"
               alt="Illustration"
               className="max-h-full max-w-full object-contain rounded-r-lg mt-24"
             />

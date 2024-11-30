@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <header className="flex justify-between items-center py-3">
       <div className="flex items-center">
-        <img src="../Utilities/Images/Logo.png" alt="Logo" className="w-10 md:w-14" />
+        <img src="/Images/Logo.png" alt="Logo" className="w-10 md:w-14" />
         <p className="font-bold text-white text-xl md:text-2xl ml-2">Expense Flow</p>
       </div>
 

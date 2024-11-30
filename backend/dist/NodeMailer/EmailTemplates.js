@@ -27,12 +27,12 @@ const VerificationCodeTemplate = `<!DOCTYPE html>
 <body>
     <div style="background-color: black; max-width: 600px; width: 100%; padding: 20px; text-align: center; border-radius: 10px;">
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto;">
-            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:../Utilities/Images/Logo.png" alt="ExpenFlow logo">
+            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:/Images/Logo.png" alt="ExpenFlow logo">
             <p style="font-weight: 500; font-size: 24px; margin-top: 5px;">Expense Flow</p>
         </div>
         <hr style="margin-top: 10px; background-color: aqua; border: none; height: 2px;">
         <div> 
-            <img style="width: 100%; max-width: 500px; margin: 0;" src="cid:../Utilities/Images/VerificationCodeTemplate.png" alt="Verification Code Image"> 
+            <img style="width: 100%; max-width: 500px; margin: 0;" src="cid:/Images/VerificationCodeTemplate.png" alt="Verification Code Image"> 
         </div>
         <div style="color: white;">
             <p>Hello, {Username}</p>
@@ -80,12 +80,12 @@ const WelcomeEmailTemplate = `<!DOCTYPE html>
 <body>
     <div style="background-color: black; max-width: 600px; width: 100%; padding: 20px; text-align: center; border-radius: 10px;">
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto;">
-            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:../Utilities/Images/Logo.png" alt="ExpenFlow logo">
+            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:/Images/Logo.png" alt="ExpenFlow logo">
             <p style="font-weight: 500; font-size: 24px; margin-top: 5px;">Expense Flow</p>
         </div>
         <hr style="margin-top: 10px; background-color: aqua; border: none; height: 2px;">
         <div> 
-            <img style="width: 70%; max-width: 500px; margin: 0;" src="cid:../Utilities/Images/WelcomeTemplate.png" alt="Welcome Image"> 
+            <img style="width: 70%; max-width: 500px; margin: 0;" src="cid:/Images/WelcomeTemplate.png" alt="Welcome Image"> 
         </div>
         <div style="color: white;">
             <p style="margin-top: 20px; font-size: x-large;">Welcome, {Username}</p>
@@ -135,12 +135,12 @@ const ResetPasswordEmailTemplate = `<!DOCTYPE html>
 <body>
     <div style="background-color: black; max-width: 600px; width: 100%; padding: 20px; text-align: center; border-radius: 10px;">
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto;">
-            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:../Utilities/Images/Logo.png" alt="ExpenFlow logo">
+            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:/Images/Logo.png" alt="ExpenFlow logo">
             <p style="font-weight: 500; font-size: 24px; margin-top: 5px;">Expense Flow</p>
         </div>
         <hr style="margin-top: 10px; background-color: aqua; border: none; height: 2px;">
         <div> 
-            <img style="width: 75%; max-width: 500px; margin: 0;" src="cid:../Utilities/Images/ResetPasswordTemplate.png" alt="Reset Password Image"> 
+            <img style="width: 75%; max-width: 500px; margin: 0;" src="cid:/Images/ResetPasswordTemplate.png" alt="Reset Password Image"> 
         </div>
         <div style="color: white;">
             <p style="margin-top: 20px; font-size: x-large;">Hello, {Username}</p>
@@ -184,12 +184,12 @@ const PasswordResetSuccessTemplate = `<!DOCTYPE html>
 <body>
     <div style="background-color: black; max-width: 600px; width: 100%; padding: 20px; text-align: center; border-radius: 10px;">
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: auto;">
-            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:../Utilities/Images/Logo.png" alt="ExpenFlow logo">
+            <img style="margin-left: 30%; width: 50px; margin-right: 10px;" src="cid:/Images/Logo.png" alt="ExpenFlow logo">
             <p style="font-weight: 500; font-size: 24px; margin-top: 5px;">Expense Flow</p>
         </div>
         <hr style="margin-top: 10px; background-color: aqua; border: none; height: 2px;">
         <div> 
-            <img style="width: 75%; max-width: 500px; margin: 0;" src="cid:../Utilities/Images/PasswordResetSuccessTemplate.png" alt="Password Reset Successful Image"> 
+            <img style="width: 75%; max-width: 500px; margin: 0;" src="cid:/Images/PasswordResetSuccessTemplate.png" alt="Password Reset Successful Image"> 
         </div>
         <div style="color: white;">
             <p style="margin-top: 20px; font-size: x-large;">Hello, {Username}</p>

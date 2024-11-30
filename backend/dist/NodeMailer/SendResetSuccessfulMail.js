@@ -26,8 +26,8 @@ const SendResetSuccessfulMail = (username, email) => __awaiter(void 0, void 0, v
                 pass: process.env.EMAIL_PASSWORD
             }
         });
-        const LogoPath = path_1.default.join(__dirname, '../Utilities/Images/Logo.png');
-        const PasswordResetSuccessTemplatePath = path_1.default.join(__dirname, '../Utilities/Images/PasswordResetSuccessTemplate.png');
+        const LogoPath = path_1.default.join(__dirname, '/Images/Logo.png');
+        const PasswordResetSuccessTemplatePath = path_1.default.join(__dirname, '/Images/PasswordResetSuccessTemplate.png');
         const mailDetails = {
             to: email,
             subject: 'Password Reset status',
@@ -35,11 +35,11 @@ const SendResetSuccessfulMail = (username, email) => __awaiter(void 0, void 0, v
             attachments: [{
                     filename: 'Logo.png',
                     path: LogoPath,
-                    cid: '../Utilities/Images/Logo.png'
+                    cid: '/Images/Logo.png'
                 }, {
                     filename: 'PasswordResetSuccessTemplate.png',
                     path: PasswordResetSuccessTemplatePath,
-                    cid: '../Utilities/Images/PasswordResetSuccessTemplate.png'
+                    cid: '/Images/PasswordResetSuccessTemplate.png'
                 }]
         };
         yield transporter.sendMail(mailDetails);
