@@ -26,7 +26,7 @@ const SendVerificationCode = (username, email, verificationCode) => __awaiter(vo
                 pass: process.env.EMAIL_PASSWORD
             }
         });
-        const LogoPath = path_1.default.join(__dirname, '/Images/Logo.png');
+        const LogoPath = path_1.default.join(__dirname, '../Images/Logo.png');
         const VerificationCodeTemplatePath = path_1.default.join(__dirname, '../Images/VerificationCodeTemplate.png');
         const mailDetails = {
             to: email,

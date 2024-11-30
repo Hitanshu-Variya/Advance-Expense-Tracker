@@ -15,7 +15,7 @@ const SendVerificationCode = async (username: UserStructure["username"], email: 
             }
         });
 
-        const LogoPath = path.join(__dirname, '/Images/Logo.png');
+        const LogoPath = path.join(__dirname, '../Images/Logo.png');
         const VerificationCodeTemplatePath = path.join(__dirname, '../Images/VerificationCodeTemplate.png');
         
         const mailDetails = {
