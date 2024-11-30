@@ -13,21 +13,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 const allowedOrigins = [process.env.CLIENT_URL];
 
-app.use(cors({
-    origin: function(origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    optionsSuccessStatus: 200,
-    preflightContinue: false,
-    maxAge: 86400 // 24 hours
-}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
