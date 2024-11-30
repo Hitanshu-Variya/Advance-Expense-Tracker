@@ -12,7 +12,8 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL]; 
+const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL] : []; 
+console.log(allowedOrigins);
 
 const corsOptions = {
   origin: allowedOrigins,
