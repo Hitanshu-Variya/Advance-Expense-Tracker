@@ -9,6 +9,7 @@ import Dashboard from '../Pages/Dashboard.tsx'
 import Expense from '../Pages/Transaction.tsx';
 import Budget from '../Pages/Budget.tsx';
 import Profile from '../Pages/Profile.tsx';
+import ContactUs from '../Pages/ContactUs.tsx';
 import UpdateEmailVerificationPage from '../Pages/UpdateEmailVerificationPage.tsx';
 import { Toaster } from "react-hot-toast";
 
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/transactions" element={<Expense />} />
         <Route path="/budget" element={<Budget />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/contact-us" element={<ContactUs />} />
       </Routes>
       <Toaster />
     </div>
