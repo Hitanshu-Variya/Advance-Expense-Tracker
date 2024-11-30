@@ -2,14 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/**",
+      "src": "build/**",
       "use": "@vercel/static"
     }
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/dist/index.html"
-    }
+  "rewrites":  [
+    {"source": "/(.*)", "destination": "/build/index.html"}
   ]
 }
