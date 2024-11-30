@@ -180,6 +180,7 @@ const login = async (req: Request, res: Response) => {
 const logout = (req: Request, res: Response) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
+    res.clearCookie("jwt");
     return res.status(201).json({ message: "Logged Out Successfully!" });
 
   } catch (error) {
@@ -188,19 +189,19 @@ const logout = (req: Request, res: Response) => {
   }
 };
 
-const checkAuth = async (req: Request | any, res: Response) => {
+const authenticateUser = async (req: Request, res: Response) => {
   try {
-    const User = await user.findById(req.userID).select("-password");
-    if (!User) {
-      return res.status(400).json({ error: "User Not Found!" });
+    const { userID } = req;
+
+    if(!userID){
+      return res.status(400).json({ error: "Unauthorized" });
     }
 
-    return res.status(201).json({ success: true, User });
-
+    return res.status(201).json({ success: true });
   } catch (error) {
-    console.log("Error: check Auth", error);
+    console.log("Error: verify Token", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-export { signup, verifyEmail, forgetPassword, resetPassword, login, logout, checkAuth };
+export { signup, verifyEmail, forgetPassword, resetPassword, login, logout, authenticateUser };
