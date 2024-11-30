@@ -30,7 +30,9 @@ const Sidebar = () => {
 
   const handlelogout = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`);
+      const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/auth/logout`, {}, {
+        withCredentials: true
+      });
       if(response.status === 201) {
         navigate('/');
       }
