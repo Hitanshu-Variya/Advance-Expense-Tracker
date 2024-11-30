@@ -29,10 +29,10 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { username, password, confirmPassword, email } = req.body;
         const EmailalreadyExists = yield user_model_1.default.findOne({ email });
         if (EmailalreadyExists) {
-            return res.status(400).json({ error: "Email already Exists! Please choose a different Email!" });
+            return res.status(400).json({ message: "Email already Exists! Please choose a different Email!" });
         }
         if (password !== confirmPassword) {
-            return res.status(400).json({ error: "Passwords do not match!" });
+            return res.status(400).json({ message: "Passwords do not match!" });
         }
         const salt = yield bcryptjs_1.default.genSalt(10);
         const hashedPassword = yield bcryptjs_1.default.hash(password, salt);
@@ -45,23 +45,32 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             verificationCodeExpiresAt: Date.now() + 15 * 60 * 1000
         });
         yield newUser.save();
-        (0, GenerateJWTTokenAndCookies_1.default)(newUser._id, res);
+        const token = (0, GenerateJWTTokenAndCookies_1.default)(newUser._id, res);
         res.status(201).json({
-            message: "signup successful!"
+            message: "Signup successful!",
+            user: {
+                id: newUser._id,
+                username: newUser.username,
+                email: newUser.email
+            }
         });
-        yield Promise.all(Interfaces_1.categories.map((category) => __awaiter(void 0, void 0, void 0, function* () {
-            yield budget_model_1.default.create({
-                userID: newUser._id,
-                category,
-                amount: 1000,
-                period: 'week'
-            });
-        })));
-        yield (0, SendVerificationCode_1.default)(newUser.username, newUser.email, verificationCode);
+        Promise.all([
+            Promise.all(Interfaces_1.categories.map((category) => __awaiter(void 0, void 0, void 0, function* () {
+                yield budget_model_1.default.create({
+                    userID: newUser._id,
+                    category,
+                    amount: 1000,
+                    period: 'week'
+                });
+            }))),
+            (0, SendVerificationCode_1.default)(newUser.username, newUser.email, verificationCode)
+        ]).catch(error => {
+            console.error('Post-signup tasks error:', error);
+        });
     }
     catch (error) {
-        console.log("Error: signup", error);
-        return res.status(500).json({ error: "Internal Server Error!" });
+        console.error("Error: signup", error);
+        return res.status(500).json({ message: "Internal Server Error!" });
     }
 });
 exports.signup = signup;

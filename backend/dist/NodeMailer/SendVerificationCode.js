@@ -27,7 +27,7 @@ const SendVerificationCode = (username, email, verificationCode) => __awaiter(vo
             }
         });
         const LogoPath = path_1.default.join(__dirname, '/Images/Logo.png');
-        const VerificationCodeTemplatePath = path_1.default.join(__dirname, '/Images/VerificationCodeTemplate.png');
+        const VerificationCodeTemplatePath = path_1.default.join(__dirname, '../Images/VerificationCodeTemplate.png');
         const mailDetails = {
             to: email,
             subject: 'Your Verification Code',
@@ -35,11 +35,11 @@ const SendVerificationCode = (username, email, verificationCode) => __awaiter(vo
             attachments: [{
                     filename: 'Logo.png',
                     path: LogoPath,
-                    cid: '/Images/Logo.png'
+                    cid: '../Images/Logo.png'
                 }, {
                     filename: 'VerificationCodeTemplate.png',
                     path: VerificationCodeTemplatePath,
-                    cid: '/Images/VerificationCodeTemplate.png'
+                    cid: '../Images/VerificationCodeTemplate.png'
                 }]
         };
         yield transporter.sendMail(mailDetails);
