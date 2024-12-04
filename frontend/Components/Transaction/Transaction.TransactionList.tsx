@@ -132,7 +132,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
             {/* Right Section - Amount and Edit/Delete Buttons */}
             <div className="flex items-center space-x-6">
               <div className="font-bold text-xl text-gray-200">
-                ${transaction.amount.toFixed(2)}
+                &#8377;{transaction.amount.toFixed(2)}
               </div>
 
               {/* Edit & Delete Buttons */}

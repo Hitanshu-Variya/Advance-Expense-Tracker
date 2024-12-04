@@ -115,7 +115,7 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
           </div>
 
           <div className="flex flex-col">
-            <label className="text-gray-600">Amount ($)</label>
+            <label className="text-gray-600">Amount (&#8377;)</label>
             <input
               type="number"
               name="amount"
