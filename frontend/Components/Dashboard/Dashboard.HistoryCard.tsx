@@ -40,7 +40,7 @@ const HistoryCard: React.FC<HistoryCardProps> = ({ transaction }) => {
             transactionType === 'income' ? 'text-green-500' : 'text-red-500'
           }`}
         >
-          {transactionType === 'income' ? '+' : '-'}${amount.toFixed(2)}
+          {transactionType === 'income' ? '+' : '-'}&#8377;{amount.toFixed(2)}
         </p>
       </div>
     </div>
