@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   onFeaturesClick: () => void;
+  onContactClick: () => void;
 }
 
-const Navbar = ({ onFeaturesClick }: NavbarProps) => {
+const Navbar = ({ onFeaturesClick, onContactClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ const Navbar = ({ onFeaturesClick }: NavbarProps) => {
         <ul className="flex flex-col lg:flex-row lg:space-x-8">
           <li><a href="/" className="hover:underline">Home</a></li>
           <li><button onClick={onFeaturesClick} className="hover:underline">Features</button></li>
-          <li><a href="#contact-us" className="hover:underline">Contact Us</a></li>
+          <li><button onClick={onContactClick} className="hover:underline">Contact</button></li>
         </ul>
       </nav>
 
