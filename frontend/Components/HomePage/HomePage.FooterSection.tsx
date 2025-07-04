@@ -1,6 +1,6 @@
 const FooterSection = () => {
   return (
-    <footer className="mt-20 text-white">
+    <footer id="contact-us" className="mt-20 text-white">
       <hr className='my-10 h-px w-full bg-slate-800 border-none shadow-lg shadow-white' />
       
       <div className="container mx-auto px-4">
