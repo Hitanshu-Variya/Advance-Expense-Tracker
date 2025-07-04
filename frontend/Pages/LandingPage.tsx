@@ -12,7 +12,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="mx-auto px-4 md:px-14 pb-6 bg-black overflow-hidden">
+    <div className="mx-auto px-4 md:px-14 pb-6 bg-black overflow-hidden scroll-smooth">
       <Navbar onFeaturesClick={scrollToFeatures} />
       <HeroSection />
       <section ref={featuresRef} id="features">
