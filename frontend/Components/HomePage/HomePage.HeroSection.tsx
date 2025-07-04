@@ -18,15 +18,12 @@ const HeroSection = () => {
             <button onClick={() => navigate('/signup')} className="bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-3 mr-4 md:mr-0 rounded-full hover:opacity-80">
               Get Started
             </button>
-            <a
-              href="https://youtu.be/mWVDn0Q2nZg?si=ZzH9uqCDgISD-NbU"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              className="text-white px-6 py-3 border border-white rounded-full hover:bg-gray-700"
+              onClick={() => window.open("https://youtu.be/mWVDn0Q2nZg?si=boJ3YiObflu0VhrV", "_blank")}
             >
-              <button className="text-white px-6 py-3 border border-white rounded-full hover:bg-gray-700">
-                Watch Video
-              </button>
-            </a>
+              Watch Video
+            </button>
           </div>
         </section>
 
